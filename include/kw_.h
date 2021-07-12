@@ -7,9 +7,10 @@
 #ifndef KIWOOM_API_C_WRAPPER_H_
 #define KIWOOM_API_C_WRAPPER_H_
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <OAIdl.h>
+#if !defined(COM_NO_WINDOWS_H)
+# include <windows.h>
+# include <ole2.h>
+#endif
 
 #ifdef KW_EXPORTS
 #define KW_API __declspec(dllexport)
