@@ -8,7 +8,7 @@ COM(ActiveX) 지식이나 MFC연동이 필요하지 않습니다.
 ## 필수환경
 키움api를 사용하려면 키움 open API+(https://www.kiwoom.com/h/customer/download/VOpenApiInfoView) 서비스 사용신청 및 API모듈을 설치하셔야 합니다.
 
-또한 모의투자의 경우에는 별도 신청(https://www.kiwoom.com/nkw.templateFrameSet.do?m=m1101000000) 을 하셔야 합니다.
+또한 모의투자의 경우에는 별도 신청(https://www.kiwoom.com/h/mock/ordinary/VMockTotalMHOMEView) 을 하셔야 합니다.
 (* 모의투자기간이 제한되어 있어 투자기간이 종료되면 다시 신청하셔야 합니다.)
 
 
