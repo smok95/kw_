@@ -42,9 +42,9 @@ KW_API long		kw_SendOrderA(PCSTR sRQName, PCSTR sScreenNo, PCSTR sAccNo,
 KW_API long		kw_SendOrderFOW(PCWSTR sRQName, PCWSTR sScreenNo, PCWSTR sAccNo, 
 	PCWSTR sCode, long lOrdKind, PCWSTR sSlbyTp, PCWSTR sOrdTp, long lQty,
 	PCWSTR sPrice, PCWSTR sOrgOrdNo);
-KW_API long		kw_SendOrderFOA(PCWSTR sRQName, PCWSTR sScreenNo, PCWSTR sAccNo, 
-	PCWSTR sCode, long lOrdKind, PCWSTR sSlbyTp, PCWSTR sOrdTp, long lQty,
-	PCWSTR sPrice, PCWSTR sOrgOrdNo);
+KW_API long		kw_SendOrderFOA(PCSTR sRQName, PCSTR sScreenNo, PCSTR sAccNo, 
+	PCSTR sCode, long lOrdKind, PCSTR sSlbyTp, PCSTR sOrdTp, long lQty,
+	PCSTR sPrice, PCSTR sOrgOrdNo);
 
 KW_API void		kw_SetInputValueW(PCWSTR sID, PCWSTR sValue);
 KW_API void		kw_SetInputValueA(PCSTR sID, PCSTR sValue);
@@ -279,6 +279,9 @@ KW_API void kw_Wait();
 KW_API void kw_Free(void* p);
 KW_API void kw_FreeStringW(PWSTR p);
 KW_API void kw_FreeStringA(PSTR p);
+
+// MBCS (Multibyte Character Set)일 때 UTF8 인코딩 여부 설정 (1이면UTF8 사용)
+KW_API void kw_SetCharsetUtf8(int useUtf8);
 
 #ifdef _UNICODE
 #define kw_SetOnReceiveConditionVer kw_SetOnReceiveConditionVerW

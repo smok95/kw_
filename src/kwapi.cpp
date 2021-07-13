@@ -195,8 +195,30 @@ HRESULT kwapi::onInvoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags
 		}
 		
 		if (onReceiveTrDataA_) {
-			onReceiveTrDataA_(sScrNo, sRQName, sTrCode, sRecordName,
-				sPrevNext, nDataLength, sErrorCode, sMessage, sSplmMsg);
+			if (useUtf8_) {
+				char* pScrNo = bstrToString(sScrNo);
+				char* pRQName = bstrToString(sRQName);
+				char* pTrCode = bstrToString(sTrCode);
+				char* pRecordName = bstrToString(sRecordName);
+				char* pPrevNext = bstrToString(sPrevNext);
+				char* pErrorCode = bstrToString(sErrorCode);
+				char* pMessage = bstrToString(sMessage);
+				char* pSplmMsg = bstrToString(sSplmMsg);
+				onReceiveTrDataA_(pScrNo, pRQName, pTrCode, pRecordName,
+					pPrevNext, nDataLength, pErrorCode, pMessage, pSplmMsg);
+				free(pScrNo);
+				free(pRQName);
+				free(pTrCode);
+				free(pRecordName);
+				free(pPrevNext);
+				free(pErrorCode);
+				free(pMessage);
+				free(pSplmMsg);
+			}
+			else {
+				onReceiveTrDataA_(sScrNo, sRQName, sTrCode, sRecordName,
+					sPrevNext, nDataLength, sErrorCode, sMessage, sSplmMsg);
+			}
 		}
 	}break;
 	case 2:
@@ -210,7 +232,18 @@ HRESULT kwapi::onInvoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags
 		}
 
 		if (onReceiveRealDataA_) {
-			onReceiveRealDataA_(sRealKey, sRealType, sRealData);
+			if (useUtf8_) {
+				char* pRealKey = bstrToString(sRealKey);
+				char* pRealType = bstrToString(sRealType);
+				char* pRealData = bstrToString(sRealData);
+				onReceiveRealDataA_(pRealKey, pRealType, pRealData);
+				free(pRealKey);
+				free(pRealData);
+				free(pRealType);
+			}
+			else {
+				onReceiveRealDataA_(sRealKey, sRealType, sRealData);
+			}
 		}
 	}break;
 	case 3:
@@ -225,7 +258,20 @@ HRESULT kwapi::onInvoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags
 		}
 
 		if (onReceiveMsgA_) {
-			onReceiveMsgA_(sScrNo, sRQName, sTrCode, sMsg);
+			if (useUtf8_) {
+				char* pScrNo = bstrToString(sScrNo);
+				char* pRQName = bstrToString(sRQName);
+				char* pTrCode = bstrToString(sTrCode);
+				char* pMsg = bstrToString(sMsg);
+				onReceiveMsgA_(pScrNo, pRQName, pTrCode, pMsg);
+				free(pScrNo);
+				free(pRQName);
+				free(pTrCode);
+				free(pMsg);
+			}
+			else {
+				onReceiveMsgA_(sScrNo, sRQName, sTrCode, sMsg);
+			}
 		}
 	}break;
 	case 4:
@@ -239,7 +285,16 @@ HRESULT kwapi::onInvoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags
 		}
 
 		if (onReceiveChejanDataA_) {
-			onReceiveChejanDataA_(sGubun, nItemCnt, sFidList);
+			if (useUtf8_) {
+				char* pGubun = bstrToString(sGubun);
+				char* pFidList = bstrToString(sFidList);
+				onReceiveChejanDataA_(pGubun, nItemCnt, pFidList);
+				free(pGubun);
+				free(pFidList);
+			}
+			else {
+				onReceiveChejanDataA_(sGubun, nItemCnt, sFidList);
+			}
 		}
 	}break;
 	case 5:
@@ -262,8 +317,22 @@ HRESULT kwapi::onInvoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags
 		}
 
 		if (onReceiveRealConditionA_) {
-			onReceiveRealConditionA_(sTrCode, strType, strConditionName,
-				strConditionIndex);
+			if (useUtf8_) {
+				char* pTrCode = bstrToString(sTrCode);
+				char* pType = bstrToString(strType);
+				char* pConditionName = bstrToString(strConditionName);
+				char* pConditionIndex = bstrToString(strConditionIndex);
+				onReceiveRealConditionA_(pTrCode, pType, pConditionName,
+					pConditionIndex);
+				free(pTrCode);
+				free(pType);
+				free(pConditionName);
+				free(pConditionIndex);
+			}
+			else {
+				onReceiveRealConditionA_(sTrCode, strType, strConditionName,
+					strConditionIndex);
+			}
 		}
 	}break;
 	case 8:
@@ -280,8 +349,20 @@ HRESULT kwapi::onInvoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags
 		}
 
 		if (onReceiveTrConditionA_) {
-			onReceiveTrConditionA_(sScrNo, strCodeList, strConditionName,
-				nIndex, nNext);
+			if (useUtf8_) {
+				char* pScrNo = bstrToString(sScrNo);
+				char* pCodeList = bstrToString(strCodeList);
+				char* pConditionName = bstrToString(strConditionName);
+				onReceiveTrConditionA_(pScrNo, pCodeList, pConditionName,
+					nIndex, nNext);
+				free(pScrNo);
+				free(pCodeList);
+				free(pConditionName);
+			}
+			else {
+				onReceiveTrConditionA_(sScrNo, strCodeList, strConditionName,
+					nIndex, nNext);
+			}			
 		}
 	}break;
 	case 9: {
@@ -293,7 +374,15 @@ HRESULT kwapi::onInvoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags
 		}
 
 		if (onReceiveConditionVerA_) {
-			onReceiveConditionVerA_(lRet, sMsg);
+			if (useUtf8_) {
+				char* pMsg = bstrToString(sMsg);
+				onReceiveConditionVerA_(lRet, pMsg);
+				free(pMsg);
+			}
+			else {
+				onReceiveConditionVerA_(lRet, sMsg);
+			}
+			
 		}
 	}break;
 	default:

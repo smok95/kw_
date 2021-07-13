@@ -1,12 +1,22 @@
 #include "kw_.h"
-
+#include <string>
+#include <codecvt>
 #include "kwapi.h"
 
-#define B2W(bstr) _wcsdup(bstr)
-#define B2A(bstr) _com_util::ConvertBSTRToString(bstr)
-///////////////////////////////////////////////////////////////////////////////
+using namespace std;
+
+static _bstr_t stringToBstr(const char* s);
+static wchar_t* utf8ToUnicode(const char* utf8);
+static wstring utf8ToWstr(const char* utf8);
+static wstring_convert<codecvt_utf8<wchar_t>> u8_u16_conv;
 
 kwapi api_;
+
+#define B2W(bstr) _wcsdup(bstr)
+#define B2A(bstr) api_.bstrToString(bstr)
+
+#define A2B(astr) stringToBstr(astr)
+///////////////////////////////////////////////////////////////////////////////
 
 BOOL APIENTRY DllMain(HMODULE hModule,
 	DWORD  ul_reason_for_call,
@@ -97,6 +107,10 @@ void kw_FreeStringA(PSTR p) {
 	kw_Free(p);
 }
 
+void kw_SetCharsetUtf8(int useUtf8) {
+	api_.SetUseUtf8(useUtf8 == 1);
+}
+
 long kw_CommConnect() {
 	return api_.commConnect();
 }
@@ -110,7 +124,7 @@ PWSTR kw_GetMasterCodeNameW(PCWSTR sTrCode) {
 }
 
 PSTR kw_GetMasterCodeNameA(PCSTR sTrCode) {
-	return B2A(api_.GetMasterCodeName(sTrCode));
+	return B2A(api_.GetMasterCodeName(A2B(sTrCode)));
 }
 
 long kw_GetMasterListedStockCntW(PCWSTR sTrCode) {
@@ -118,7 +132,7 @@ long kw_GetMasterListedStockCntW(PCWSTR sTrCode) {
 }
 
 long kw_GetMasterListedStockCntA(PCSTR sTrCode) {
-	return api_.GetMasterListedStockCnt(sTrCode);
+	return api_.GetMasterListedStockCnt(A2B(sTrCode));
 }
 
 PWSTR kw_GetMasterConstructionW(PCWSTR sTrCode) {
@@ -126,7 +140,7 @@ PWSTR kw_GetMasterConstructionW(PCWSTR sTrCode) {
 }
 
 PSTR kw_GetMasterConstructionA(PCSTR sTrCode) {
-	return B2A(api_.GetMasterConstruction(sTrCode));
+	return B2A(api_.GetMasterConstruction(A2B(sTrCode)));
 }
 
 PWSTR kw_GetMasterListedStockDateW(PCWSTR sTrCode) {
@@ -134,7 +148,7 @@ PWSTR kw_GetMasterListedStockDateW(PCWSTR sTrCode) {
 }
 
 PSTR kw_GetMasterListedStockDateA(PCSTR sTrCode) {
-	return B2A(api_.GetMasterListedStockDate(sTrCode));
+	return B2A(api_.GetMasterListedStockDate(A2B(sTrCode)));
 }
 
 PWSTR kw_GetMasterLastPriceW(PCWSTR sTrCode) {
@@ -142,7 +156,7 @@ PWSTR kw_GetMasterLastPriceW(PCWSTR sTrCode) {
 }
 
 PSTR kw_GetMasterLastPriceA(PCSTR sTrCode) {
-	return B2A(api_.GetMasterLastPrice(sTrCode));
+	return B2A(api_.GetMasterLastPrice(A2B(sTrCode)));
 }
 
 PWSTR kw_GetMasterStockStateW(PCWSTR sTrCode) {
@@ -150,14 +164,14 @@ PWSTR kw_GetMasterStockStateW(PCWSTR sTrCode) {
 }
 
 PSTR kw_GetMasterStockStateA(PCSTR sTrCode) {
-	return B2A(api_.GetMasterStockState(sTrCode));
+	return B2A(api_.GetMasterStockState(A2B(sTrCode)));
 }
 
 long kw_GetDataCountW(PCWSTR strRecordName) {
 	return api_.GetDataCount(strRecordName);
 }
 long kw_GetDataCountA(PCSTR strRecordName) {
-	return api_.GetDataCount(strRecordName);
+	return api_.GetDataCount(A2B(strRecordName));
 }
 
 PWSTR kw_GetOutputValueW(PCWSTR strRecordName, long nRepeatIdx,
@@ -167,7 +181,7 @@ PWSTR kw_GetOutputValueW(PCWSTR strRecordName, long nRepeatIdx,
 
 PSTR kw_GetOutputValueA(PCSTR strRecordName, long nRepeatIdx,
 	long nItemIdx) {
-	return B2A(api_.GetOutputValue(strRecordName, nRepeatIdx, nItemIdx));
+	return B2A(api_.GetOutputValue(A2B(strRecordName), nRepeatIdx, nItemIdx));
 }
 
 PWSTR kw_GetCommDataW(PCWSTR strTrCode, PCWSTR strRecordName,
@@ -177,7 +191,8 @@ PWSTR kw_GetCommDataW(PCWSTR strTrCode, PCWSTR strRecordName,
 
 PSTR kw_GetCommDataA(PCSTR strTrCode, PCSTR strRecordName,
 	long nIndex, PCSTR strItemName) {
-	return B2A(api_.GetCommData(strTrCode, strRecordName, nIndex, strItemName));
+	return B2A(api_.GetCommData(A2B(strTrCode), A2B(strRecordName), nIndex, 
+		A2B(strItemName)));
 }
 
 PWSTR kw_GetCommRealDataW(PCWSTR sTrCode, long nFid) {
@@ -185,7 +200,7 @@ PWSTR kw_GetCommRealDataW(PCWSTR sTrCode, long nFid) {
 }
 
 PSTR kw_GetCommRealDataA(PCSTR sTrCode, long nFid) {
-	return B2A(api_.GetCommRealData(sTrCode, nFid));
+	return B2A(api_.GetCommRealData(A2B(sTrCode), nFid));
 }
 
 PWSTR kw_GetChejanDataW(long nFid) {
@@ -210,7 +225,7 @@ PWSTR kw_GetCodeListByMarketW(PCWSTR sMarket) {
 }
 
 PSTR kw_GetCodeListByMarketA(PCSTR sMarket) {
-	return B2A(api_.GetCodeListByMarket(sMarket));
+	return B2A(api_.GetCodeListByMarket(A2B(sMarket)));
 }
 
 
@@ -243,7 +258,7 @@ PWSTR kw_GetOptionCodeW(PCWSTR strActPrice, int nCp,
 }
 
 PSTR kw_GetOptionCodeA(PCSTR strActPrice, int nCp, PCSTR strMonth) {
-	return B2A(api_.GetOptionCode(strActPrice, nCp, strMonth));
+	return B2A(api_.GetOptionCode(A2B(strActPrice), nCp, A2B(strMonth)));
 }
 
 PWSTR kw_GetOptionCodeByMonthW(PCWSTR sTrCode, int nCp,
@@ -253,7 +268,7 @@ PWSTR kw_GetOptionCodeByMonthW(PCWSTR sTrCode, int nCp,
 
 PSTR kw_GetOptionCodeByMonthA(PCSTR sTrCode, int nCp,
 	PCSTR strMonth) {
-	return B2A(api_.GetOptionCodeByMonth(sTrCode, nCp, strMonth));
+	return B2A(api_.GetOptionCodeByMonth(A2B(sTrCode), nCp, A2B(strMonth)));
 }
 
 PWSTR kw_GetOptionCodeByActPriceW(PCWSTR sTrCode, int nCp,
@@ -262,7 +277,7 @@ PWSTR kw_GetOptionCodeByActPriceW(PCWSTR sTrCode, int nCp,
 }
 
 PSTR kw_GetOptionCodeByActPriceA(PCSTR sTrCode, int nCp, int nTick) {
-	return B2A(api_.GetOptionCodeByActPrice(sTrCode, nCp, nTick));
+	return B2A(api_.GetOptionCodeByActPrice(A2B(sTrCode), nCp, nTick));
 }
 
 PWSTR kw_GetSFutureListW(PCWSTR strBaseAssetCode) {
@@ -270,7 +285,7 @@ PWSTR kw_GetSFutureListW(PCWSTR strBaseAssetCode) {
 }
 
 PSTR kw_GetSFutureListA(PCSTR strBaseAssetCode) {
-	return B2A(api_.GetSFutureList(strBaseAssetCode));
+	return B2A(api_.GetSFutureList(A2B(strBaseAssetCode)));
 }
 
 PWSTR kw_GetSFutureCodeByIndexW(PCWSTR strBaseAssetCode, 
@@ -278,7 +293,7 @@ PWSTR kw_GetSFutureCodeByIndexW(PCWSTR strBaseAssetCode,
 	return B2W(api_.GetSFutureCodeByIndex(strBaseAssetCode, nIndex));
 }
 PSTR kw_GetSFutureCodeByIndexA(PCSTR strBaseAssetCode, int nIndex) {
-	return B2A(api_.GetSFutureCodeByIndex(strBaseAssetCode, nIndex));
+	return B2A(api_.GetSFutureCodeByIndex(A2B(strBaseAssetCode), nIndex));
 }
 
 PWSTR kw_GetSActPriceListW(PCWSTR strBaseAssetGb) {
@@ -286,7 +301,7 @@ PWSTR kw_GetSActPriceListW(PCWSTR strBaseAssetGb) {
 }
 
 PSTR kw_GetSActPriceListA(PCSTR strBaseAssetGb) {
-	return B2A(api_.GetSActPriceList(strBaseAssetGb));
+	return B2A(api_.GetSActPriceList(A2B(strBaseAssetGb)));
 }
 
 PWSTR kw_GetSMonthListW(PCWSTR strBaseAssetGb) {
@@ -294,7 +309,7 @@ PWSTR kw_GetSMonthListW(PCWSTR strBaseAssetGb) {
 }
 
 PSTR kw_GetSMonthListA(PCSTR strBaseAssetGb) {
-	return B2A(api_.GetSMonthList(strBaseAssetGb));
+	return B2A(api_.GetSMonthList(A2B(strBaseAssetGb)));
 }
 
 PWSTR kw_GetSOptionCodeW(PCWSTR strBaseAssetGb, PCWSTR strActPrice, int nCp,
@@ -304,7 +319,8 @@ PWSTR kw_GetSOptionCodeW(PCWSTR strBaseAssetGb, PCWSTR strActPrice, int nCp,
 
 PSTR kw_GetSOptionCodeA(PCSTR strBaseAssetGb, PCSTR strActPrice, int nCp,
 	PCSTR strMonth) {
-	return B2A(api_.GetSOptionCode(strBaseAssetGb, strActPrice, nCp, strMonth));
+	return B2A(api_.GetSOptionCode(A2B(strBaseAssetGb), A2B(strActPrice), nCp, 
+		A2B(strMonth)));
 }
 
 PWSTR kw_GetSOptionCodeByMonthW(PCWSTR strBaseAssetGb, PCWSTR sTrCode, int nCp, 
@@ -313,7 +329,8 @@ PWSTR kw_GetSOptionCodeByMonthW(PCWSTR strBaseAssetGb, PCWSTR sTrCode, int nCp,
 }
 PSTR kw_GetSOptionCodeByMonthA(PCSTR strBaseAssetGb, PCSTR sTrCode, int nCp,
 	PCSTR strMonth) {
-	return B2A(api_.GetSOptionCodeByMonth(strBaseAssetGb, sTrCode, nCp, strMonth));
+	return B2A(api_.GetSOptionCodeByMonth(A2B(strBaseAssetGb), sTrCode, nCp, 
+		A2B(strMonth)));
 }
 
 PWSTR kw_GetSOptionCodeByActPriceW(PCWSTR strBaseAssetGb, PCWSTR sTrCode,
@@ -324,8 +341,8 @@ PWSTR kw_GetSOptionCodeByActPriceW(PCWSTR strBaseAssetGb, PCWSTR sTrCode,
 
 PSTR kw_GetSOptionCodeByActPriceA(PCSTR strBaseAssetGb, PCSTR sTrCode, int nCp,
 	int nTick) {
-	return B2A(api_.GetSOptionCodeByActPrice(strBaseAssetGb, sTrCode, nCp,
-		nTick));
+	return B2A(api_.GetSOptionCodeByActPrice(A2B(strBaseAssetGb), A2B(sTrCode), 
+		nCp, nTick));
 }
 
 PWSTR kw_GetFutureCodeByIndexW(int nIndex) {
@@ -348,7 +365,7 @@ PWSTR kw_GetThemeGroupCodeW(PCWSTR strThemeCode) {
 }
 
 PSTR kw_GetThemeGroupCodeA(PCSTR strThemeCode) {
-	return B2A(api_.GetThemeGroupCode(strThemeCode));
+	return B2A(api_.GetThemeGroupCode(A2B(strThemeCode)));
 }
 
 PWSTR kw_GetSFOBasisAssetListW() {
@@ -371,7 +388,7 @@ PWSTR kw_GetSOptionATMW(PCWSTR strBaseAssetGb) {
 }
 
 PSTR kw_GetSOptionATMA(PCSTR strBaseAssetGb) {
-	return B2A(api_.GetSOptionATM(strBaseAssetGb));
+	return B2A(api_.GetSOptionATM(A2B(strBaseAssetGb)));
 }
 
 PWSTR kw_GetBranchCodeNameW() {
@@ -392,8 +409,9 @@ long kw_SendOrderCreditW(PCWSTR sRQName, PCWSTR sScreenNo, PCWSTR sAccNo,
 long kw_SendOrderCreditA(PCSTR sRQName, PCSTR sScreenNo, PCSTR sAccNo,
 	long nOrderType, PCSTR sCode, long nQty, long nPrice, PCSTR sHogaGb,
 	PCSTR sCreditGb, PCSTR sLoanDate, PCSTR sOrgOrderNo) {
-	return api_.SendOrderCredit(sRQName, sScreenNo, sAccNo, nOrderType, sCode,
-		nQty, nPrice, sHogaGb, sCreditGb, sLoanDate, sOrgOrderNo);
+	return api_.SendOrderCredit(A2B(sRQName), A2B(sScreenNo), A2B(sAccNo), 
+		nOrderType, A2B(sCode), nQty, nPrice, A2B(sHogaGb), A2B(sCreditGb), 
+		A2B(sLoanDate), A2B(sOrgOrderNo));
 }
 
 PWSTR kw_KOA_FunctionsW(PCWSTR sFunctionName, PCWSTR sParam) {
@@ -401,7 +419,7 @@ PWSTR kw_KOA_FunctionsW(PCWSTR sFunctionName, PCWSTR sParam) {
 }
 
 PSTR kw_KOA_FunctionsA(PCSTR sFunctionName, PCSTR sParam) {
-	return B2A(api_.KOA_Functions(sFunctionName, sParam));
+	return B2A(api_.KOA_Functions(A2B(sFunctionName), A2B(sParam)));
 }
 
 long kw_SetInfoDataW(PCWSTR sInfoData) {
@@ -409,7 +427,7 @@ long kw_SetInfoDataW(PCWSTR sInfoData) {
 }
 
 long kw_SetInfoDataA(PCSTR sInfoData) {
-	return api_.SetInfoData(sInfoData);
+	return api_.SetInfoData(A2B(sInfoData));
 }
 
 long kw_SetRealRegW(PCWSTR strScreenNo, PCWSTR strCodeList, PCWSTR strFidList,
@@ -419,7 +437,8 @@ long kw_SetRealRegW(PCWSTR strScreenNo, PCWSTR strCodeList, PCWSTR strFidList,
 
 long kw_SetRealRegA(PCSTR strScreenNo, PCSTR strCodeList, PCSTR strFidList,
 	PCSTR strOptType) {
-	return api_.SetRealReg(strScreenNo, strCodeList, strFidList, strOptType);
+	return api_.SetRealReg(A2B(strScreenNo), A2B(strCodeList), A2B(strFidList), 
+		A2B(strOptType));
 }
 
 long kw_GetConditionLoad() {
@@ -441,7 +460,8 @@ long kw_SendConditionW(PCWSTR strScrNo, PCWSTR strConditionName, int nIndex,
 
 long kw_SendConditionA(PCSTR strScrNo, PCSTR strConditionName, int nIndex,
 	int nSearch) {
-	return api_.SendCondition(strScrNo, strConditionName, nIndex, nSearch);
+	return api_.SendCondition(A2B(strScrNo), A2B(strConditionName), nIndex, 
+		nSearch);
 }
 
 void kw_SendConditionStopW(PCWSTR strScrNo, PCWSTR strConditionName,
@@ -450,14 +470,14 @@ void kw_SendConditionStopW(PCWSTR strScrNo, PCWSTR strConditionName,
 }
 
 void kw_SendConditionStopA(PCSTR strScrNo, PCSTR strConditionName, int nIndex) {
-	return api_.SendConditionStop(strScrNo, strConditionName, nIndex);
+	return api_.SendConditionStop(A2B(strScrNo), A2B(strConditionName), nIndex);
 }
 
 VARIANT	kw_GetCommDataExW(PCWSTR strTrCode, PCWSTR strRecordName) {
 	return api_.GetCommDataEx(strTrCode, strRecordName);
 }
 VARIANT	kw_GetCommDataExA(PCSTR strTrCode, PCSTR strRecordName) {
-	return api_.GetCommDataEx(strTrCode, strRecordName);
+	return api_.GetCommDataEx(A2B(strTrCode), A2B(strRecordName));
 }
 
 void kw_SetRealRemoveW(PCWSTR strScrNo, PCWSTR strDelCode) {
@@ -465,7 +485,7 @@ void kw_SetRealRemoveW(PCWSTR strScrNo, PCWSTR strDelCode) {
 }
 
 void kw_SetRealRemoveA(PCSTR strScrNo, PCSTR strDelCode) {
-	api_.SetRealRemove(strScrNo, strDelCode);
+	api_.SetRealRemove(A2B(strScrNo), A2B(strDelCode));
 }
 
 long kw_GetMarketTypeW(PCWSTR sTrCode) {
@@ -473,7 +493,7 @@ long kw_GetMarketTypeW(PCWSTR sTrCode) {
 }
 
 long kw_GetMarketTypeA(PCSTR sTrCode) {
-	return api_.GetMarketType(sTrCode);
+	return api_.GetMarketType(A2B(sTrCode));
 }
 
 
@@ -484,7 +504,7 @@ long kw_CommRqDataW(PCWSTR sRQName, PCWSTR sTrCode,
 
 long kw_CommRqDataA(PCSTR sRQName, PCSTR sTrCode,
 	long nPrevNext, PCSTR sScreenNo) {
-	return api_.CommRqData(sRQName, sTrCode, nPrevNext, sScreenNo);
+	return api_.CommRqData(A2B(sRQName), A2B(sTrCode), nPrevNext, A2B(sScreenNo));
 }
 
 PWSTR kw_GetLoginInfoW(PCWSTR sTag) {
@@ -492,7 +512,7 @@ PWSTR kw_GetLoginInfoW(PCWSTR sTag) {
 }
 
 PSTR kw_GetLoginInfoA(PCSTR sTag) {
-	return B2A(api_.GetLoginInfo(sTag));
+	return B2A(api_.GetLoginInfo(A2B(sTag)));
 }
 
 long kw_SendOrderW(PCWSTR sRQName, PCWSTR sScreenNo,
@@ -502,28 +522,26 @@ long kw_SendOrderW(PCWSTR sRQName, PCWSTR sScreenNo,
 		nPrice, sHogaGb, sOrgOrderNo);
 }
 
-long kw_SendOrderA(PCSTR sRQName, PCSTR sScreenNo,
-	PCSTR sAccNo, long nOrderType, PCSTR sCode, long nQty,
-	long nPrice, PCSTR sHogaGb, PCSTR sOrgOrderNo) {
-	return api_.SendOrder(sRQName, sScreenNo, sAccNo, nOrderType, sCode, nQty, 
-		nPrice, sHogaGb, sOrgOrderNo);
+long kw_SendOrderA(PCSTR sRQName, PCSTR sScreenNo, PCSTR sAccNo, 
+	long nOrderType, PCSTR sCode, long nQty, long nPrice, 
+	PCSTR sHogaGb, PCSTR sOrgOrderNo) {
+	return api_.SendOrder(A2B(sRQName), A2B(sScreenNo), A2B(sAccNo), nOrderType, 
+		A2B(sCode), nQty, nPrice, A2B(sHogaGb), A2B(sOrgOrderNo));
 }
 
 
-long kw_SendOrderFOW(PCWSTR sRQName, PCWSTR sScreenNo,
-	PCWSTR sAccNo, PCWSTR sCode, long lOrdKind,
-	PCWSTR sSlbyTp, PCWSTR sOrdTp, long lQty,
+long kw_SendOrderFOW(PCWSTR sRQName, PCWSTR sScreenNo, PCWSTR sAccNo, 
+	PCWSTR sCode, long lOrdKind, PCWSTR sSlbyTp, PCWSTR sOrdTp, long lQty,
 	PCWSTR sPrice, PCWSTR sOrgOrdNo) {
 	return api_.SendOrderFO(sRQName, sScreenNo, sAccNo, sCode, lOrdKind,
 		sSlbyTp, sOrdTp, lQty, sPrice, sOrgOrdNo);
 }
 
-long kw_SendOrderFOA(PCWSTR sRQName, PCWSTR sScreenNo,
-	PCWSTR sAccNo, PCWSTR sCode, long lOrdKind,
-	PCWSTR sSlbyTp, PCWSTR sOrdTp, long lQty,
-	PCWSTR sPrice, PCWSTR sOrgOrdNo) {
-	return api_.SendOrderFO(sRQName, sScreenNo, sAccNo, sCode, lOrdKind, 
-		sSlbyTp, sOrdTp, lQty, sPrice, sOrgOrdNo);
+long kw_SendOrderFOA(PCSTR sRQName, PCSTR sScreenNo, PCSTR sAccNo, 
+	PCSTR sCode, long lOrdKind, PCSTR sSlbyTp, PCSTR sOrdTp, long lQty,
+	PCSTR sPrice, PCSTR sOrgOrdNo) {
+	return api_.SendOrderFO(A2B(sRQName), A2B(sScreenNo), A2B(sAccNo), A2B(sCode), 
+		lOrdKind, A2B(sSlbyTp), A2B(sOrdTp), lQty, A2B(sPrice), A2B(sOrgOrdNo));
 }
 
 void kw_SetInputValueW(PCWSTR sID, PCWSTR sValue) {
@@ -531,7 +549,7 @@ void kw_SetInputValueW(PCWSTR sID, PCWSTR sValue) {
 }
 
 void kw_SetInputValueA(PCSTR sID, PCSTR sValue) {
-	api_.SetInputValue(sID, sValue);
+	api_.SetInputValue(A2B(sID), A2B(sValue));
 }
 
 void kw_DisconnectRealDataW(PCWSTR sScnNo) {
@@ -539,7 +557,7 @@ void kw_DisconnectRealDataW(PCWSTR sScnNo) {
 }
 
 void kw_DisconnectRealDataA(PCSTR sScnNo) {
-	api_.DisconnectRealData(sScnNo);
+	api_.DisconnectRealData(A2B(sScnNo));
 }
 
 long kw_GetRepeatCntW(PCWSTR sTrCode, PCWSTR sRecordName) {
@@ -547,7 +565,7 @@ long kw_GetRepeatCntW(PCWSTR sTrCode, PCWSTR sRecordName) {
 }
 
 long kw_GetRepeatCntA(PCSTR sTrCode, PCSTR sRecordName) {
-	return api_.GetRepeatCnt(sTrCode, sRecordName);
+	return api_.GetRepeatCnt(A2B(sTrCode), A2B(sRecordName));
 }
 
 long kw_CommKwRqDataW(PCWSTR sArrCode, long bNext, int nCodeCount,
@@ -558,8 +576,8 @@ long kw_CommKwRqDataW(PCWSTR sArrCode, long bNext, int nCodeCount,
 
 long kw_CommKwRqDataA(PCSTR sArrCode, long bNext, int nCodeCount,
 	int nTypeFlag, PCSTR sRQName, PCSTR sScreenNo) {
-	return api_.CommKwRqData(sArrCode, bNext, nCodeCount, nTypeFlag, sRQName, 
-		sScreenNo);
+	return api_.CommKwRqData(A2B(sArrCode), bNext, nCodeCount, nTypeFlag, 
+		A2B(sRQName), A2B(sScreenNo));
 }
 
 
@@ -568,5 +586,33 @@ void kw_Wait() {
 	MSG msg;
 	while (GetMessage(&msg, nullptr, 0, 0) != 0) {
 		DispatchMessage(&msg);
+	}
+}
+
+wchar_t* utf8ToUnicode(const char* utf8) {
+	if (!utf8) return nullptr;
+	const size_t len = strlen(utf8);
+	const int sizeNeeded = MultiByteToWideChar(CP_UTF8, 0, utf8, len, nullptr, 0);
+	if (sizeNeeded == 0) return nullptr;
+
+	wchar_t* unicode = (wchar_t*)calloc(sizeNeeded, sizeof(wchar_t));
+	MultiByteToWideChar(CP_UTF8, 0, utf8, len, unicode, sizeNeeded);
+	return unicode;
+}
+
+wstring utf8ToWstr(const char* utf8) {
+	if (!utf8) return L"";
+	return u8_u16_conv.from_bytes(utf8);
+}
+
+_bstr_t stringToBstr(const char* s) {
+	if (api_.IsUseUtf8()) {
+		wchar_t* w = utf8ToUnicode(s);
+		auto bs = _bstr_t(w);
+		if (w) free(w);
+		return bs;
+	}
+	else {
+		return _bstr_t(s);
 	}
 }

@@ -419,10 +419,31 @@ public:
 	HRESULT onInvoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags,
 		DISPPARAMS* pDispParams, VARIANT* pVarResult, EXCEPINFO* pExcepInfo,
 		UINT* puArgErr);
+
+	void SetUseUtf8(bool bUse) { useUtf8_ = bUse; }
+
+	inline bool IsUseUtf8() { return useUtf8_; }
+
+	inline char* bstrToString(BSTR bstr) {
+		if (useUtf8_) {
+			const UINT len = SysStringLen(bstr);
+			if (len == 0) return nullptr;
+			const int sizeNeeded = WideCharToMultiByte(CP_UTF8, 0, bstr, len,
+				nullptr, 0, nullptr, nullptr);
+			char* utf8 = (char*)calloc(sizeNeeded, sizeNeeded);
+			WideCharToMultiByte(CP_UTF8, 0, bstr, len, utf8, sizeNeeded, nullptr,
+				nullptr);
+			return utf8;
+		}
+		else {
+			return _com_util::ConvertBSTRToString(bstr);
+		}
+	}
 private:
 	kwevent event_;
 	ULONG refCount_ = 0;
 	bool oleInitialized_ = false;
+	bool useUtf8_ = false;
 	_DKHOpenAPIPtr v;
 
 	kw_OnEventConnect onEventConnect_ = nullptr;
