@@ -45,10 +45,7 @@ int main()
   // 로그인
   kw_CommConnect();
 
-  while (TRUE) {
-    kw_Wait();
-  }
-    
+  kw_Wait();    
   return 0;
 }
 ```
