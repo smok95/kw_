@@ -351,3 +351,7 @@ MigrationBackup/
 
 # WebView2
 !src/webview2/**
+
+# kiwoom tli, tlh
+!src/khopenapi.tlh
+!src/khopenapi.tli

@@ -1,0 +1,301 @@
+﻿// Created by Microsoft (R) C/C++ Compiler Version 14.28.29336.0 (075c6775).
+//
+// D:\dev\packages\kw_\build\Obj\Release\kw_\khopenapi.tlh
+//
+// C++ source equivalent of Win32 type library C:\OpenAPI\khopenapi.ocx
+// compiler-generated file created 07/13/21 at 12:30:15 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+//
+// Forward references and typedefs
+//
+
+struct __declspec(uuid("6d8c2b4d-ef41-4750-8ad4-c299033833fb"))
+/* LIBID */ __KHOpenAPILib;
+struct __declspec(uuid("cf20fbb6-edd4-4be5-a473-fef91977deb6"))
+/* dispinterface */ _DKHOpenAPI;
+struct __declspec(uuid("7335f12d-8973-4bd5-b7f0-12df03d175b7"))
+/* dispinterface */ _DKHOpenAPIEvents;
+struct /* coclass */ KHOpenAPI;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(_DKHOpenAPI, __uuidof(_DKHOpenAPI));
+_COM_SMARTPTR_TYPEDEF(_DKHOpenAPIEvents, __uuidof(_DKHOpenAPIEvents));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("cf20fbb6-edd4-4be5-a473-fef91977deb6"))
+_DKHOpenAPI : IDispatch
+{
+    //
+    // Wrapper methods for error-handling
+    //
+
+    // Methods:
+    long CommConnect ( );
+    HRESULT CommTerminate ( );
+    long CommRqData (
+        _bstr_t sRQName,
+        _bstr_t sTrCode,
+        long nPrevNext,
+        _bstr_t sScreenNo );
+    _bstr_t GetLoginInfo (
+        _bstr_t sTag );
+    long SendOrder (
+        _bstr_t sRQName,
+        _bstr_t sScreenNo,
+        _bstr_t sAccNo,
+        long nOrderType,
+        _bstr_t sCode,
+        long nQty,
+        long nPrice,
+        _bstr_t sHogaGb,
+        _bstr_t sOrgOrderNo );
+    long SendOrderFO (
+        _bstr_t sRQName,
+        _bstr_t sScreenNo,
+        _bstr_t sAccNo,
+        _bstr_t sCode,
+        long lOrdKind,
+        _bstr_t sSlbyTp,
+        _bstr_t sOrdTp,
+        long lQty,
+        _bstr_t sPrice,
+        _bstr_t sOrgOrdNo );
+    HRESULT SetInputValue (
+        _bstr_t sID,
+        _bstr_t sValue );
+    long SetOutputFID (
+        _bstr_t sID );
+    _bstr_t CommGetData (
+        _bstr_t sJongmokCode,
+        _bstr_t sRealType,
+        _bstr_t sFieldName,
+        long nIndex,
+        _bstr_t sInnerFieldName );
+    HRESULT DisconnectRealData (
+        _bstr_t sScnNo );
+    long GetRepeatCnt (
+        _bstr_t sTrCode,
+        _bstr_t sRecordName );
+    long CommKwRqData (
+        _bstr_t sArrCode,
+        long bNext,
+        int nCodeCount,
+        int nTypeFlag,
+        _bstr_t sRQName,
+        _bstr_t sScreenNo );
+    _bstr_t GetAPIModulePath ( );
+    _bstr_t GetCodeListByMarket (
+        _bstr_t sMarket );
+    long GetConnectState ( );
+    _bstr_t GetMasterCodeName (
+        _bstr_t sTrCode );
+    long GetMasterListedStockCnt (
+        _bstr_t sTrCode );
+    _bstr_t GetMasterConstruction (
+        _bstr_t sTrCode );
+    _bstr_t GetMasterListedStockDate (
+        _bstr_t sTrCode );
+    _bstr_t GetMasterLastPrice (
+        _bstr_t sTrCode );
+    _bstr_t GetMasterStockState (
+        _bstr_t sTrCode );
+    long GetDataCount (
+        _bstr_t strRecordName );
+    _bstr_t GetOutputValue (
+        _bstr_t strRecordName,
+        long nRepeatIdx,
+        long nItemIdx );
+    _bstr_t GetCommData (
+        _bstr_t strTrCode,
+        _bstr_t strRecordName,
+        long nIndex,
+        _bstr_t strItemName );
+    _bstr_t GetCommRealData (
+        _bstr_t sTrCode,
+        long nFid );
+    _bstr_t GetChejanData (
+        long nFid );
+    _bstr_t GetThemeGroupList (
+        long nType );
+    _bstr_t GetThemeGroupCode (
+        _bstr_t strThemeCode );
+    _bstr_t GetFutureList ( );
+    _bstr_t GetFutureCodeByIndex (
+        int nIndex );
+    _bstr_t GetActPriceList ( );
+    _bstr_t GetMonthList ( );
+    _bstr_t GetOptionCode (
+        _bstr_t strActPrice,
+        int nCp,
+        _bstr_t strMonth );
+    _bstr_t GetOptionCodeByMonth (
+        _bstr_t sTrCode,
+        int nCp,
+        _bstr_t strMonth );
+    _bstr_t GetOptionCodeByActPrice (
+        _bstr_t sTrCode,
+        int nCp,
+        int nTick );
+    _bstr_t GetSFutureList (
+        _bstr_t strBaseAssetCode );
+    _bstr_t GetSFutureCodeByIndex (
+        _bstr_t strBaseAssetCode,
+        int nIndex );
+    _bstr_t GetSActPriceList (
+        _bstr_t strBaseAssetGb );
+    _bstr_t GetSMonthList (
+        _bstr_t strBaseAssetGb );
+    _bstr_t GetSOptionCode (
+        _bstr_t strBaseAssetGb,
+        _bstr_t strActPrice,
+        int nCp,
+        _bstr_t strMonth );
+    _bstr_t GetSOptionCodeByMonth (
+        _bstr_t strBaseAssetGb,
+        _bstr_t sTrCode,
+        int nCp,
+        _bstr_t strMonth );
+    _bstr_t GetSOptionCodeByActPrice (
+        _bstr_t strBaseAssetGb,
+        _bstr_t sTrCode,
+        int nCp,
+        int nTick );
+    _bstr_t GetSFOBasisAssetList ( );
+    _bstr_t GetOptionATM ( );
+    _bstr_t GetSOptionATM (
+        _bstr_t strBaseAssetGb );
+    _bstr_t GetBranchCodeName ( );
+    long CommInvestRqData (
+        _bstr_t sMarketGb,
+        _bstr_t sRQName,
+        _bstr_t sScreenNo );
+    long SendOrderCredit (
+        _bstr_t sRQName,
+        _bstr_t sScreenNo,
+        _bstr_t sAccNo,
+        long nOrderType,
+        _bstr_t sCode,
+        long nQty,
+        long nPrice,
+        _bstr_t sHogaGb,
+        _bstr_t sCreditGb,
+        _bstr_t sLoanDate,
+        _bstr_t sOrgOrderNo );
+    _bstr_t KOA_Functions (
+        _bstr_t sFunctionName,
+        _bstr_t sParam );
+    long SetInfoData (
+        _bstr_t sInfoData );
+    long SetRealReg (
+        _bstr_t strScreenNo,
+        _bstr_t strCodeList,
+        _bstr_t strFidList,
+        _bstr_t strOptType );
+    long GetConditionLoad ( );
+    _bstr_t GetConditionNameList ( );
+    long SendCondition (
+        _bstr_t strScrNo,
+        _bstr_t strConditionName,
+        int nIndex,
+        int nSearch );
+    HRESULT SendConditionStop (
+        _bstr_t strScrNo,
+        _bstr_t strConditionName,
+        int nIndex );
+    _variant_t GetCommDataEx (
+        _bstr_t strTrCode,
+        _bstr_t strRecordName );
+    HRESULT SetRealRemove (
+        _bstr_t strScrNo,
+        _bstr_t strDelCode );
+    long GetMarketType (
+        _bstr_t sTrCode );
+};
+
+struct __declspec(uuid("7335f12d-8973-4bd5-b7f0-12df03d175b7"))
+_DKHOpenAPIEvents : IDispatch
+{
+    //
+    // Wrapper methods for error-handling
+    //
+
+    // Methods:
+    HRESULT OnReceiveTrData (
+        _bstr_t sScrNo,
+        _bstr_t sRQName,
+        _bstr_t sTrCode,
+        _bstr_t sRecordName,
+        _bstr_t sPrevNext,
+        long nDataLength,
+        _bstr_t sErrorCode,
+        _bstr_t sMessage,
+        _bstr_t sSplmMsg );
+    HRESULT OnReceiveRealData (
+        _bstr_t sRealKey,
+        _bstr_t sRealType,
+        _bstr_t sRealData );
+    HRESULT OnReceiveMsg (
+        _bstr_t sScrNo,
+        _bstr_t sRQName,
+        _bstr_t sTrCode,
+        _bstr_t sMsg );
+    HRESULT OnReceiveChejanData (
+        _bstr_t sGubun,
+        long nItemCnt,
+        _bstr_t sFIdList );
+    HRESULT OnEventConnect (
+        long nErrCode );
+    HRESULT OnReceiveInvestRealData (
+        _bstr_t sRealKey );
+    HRESULT OnReceiveRealCondition (
+        _bstr_t sTrCode,
+        _bstr_t strType,
+        _bstr_t strConditionName,
+        _bstr_t strConditionIndex );
+    HRESULT OnReceiveTrCondition (
+        _bstr_t sScrNo,
+        _bstr_t strCodeList,
+        _bstr_t strConditionName,
+        int nIndex,
+        int nNext );
+    HRESULT OnReceiveConditionVer (
+        long lRet,
+        _bstr_t sMsg );
+};
+
+struct __declspec(uuid("a1574a0d-6bfa-4bd7-9020-ded88711818d"))
+KHOpenAPI;
+    // [ default ] dispinterface _DKHOpenAPI
+    // [ default, source ] dispinterface _DKHOpenAPIEvents
+
+//
+// Named GUID constants initializations
+//
+
+extern "C" const GUID __declspec(selectany) LIBID_KHOpenAPILib =
+    {0x6d8c2b4d,0xef41,0x4750,{0x8a,0xd4,0xc2,0x99,0x03,0x38,0x33,0xfb}};
+extern "C" const GUID __declspec(selectany) DIID__DKHOpenAPI =
+    {0xcf20fbb6,0xedd4,0x4be5,{0xa4,0x73,0xfe,0xf9,0x19,0x77,0xde,0xb6}};
+extern "C" const GUID __declspec(selectany) DIID__DKHOpenAPIEvents =
+    {0x7335f12d,0x8973,0x4bd5,{0xb7,0xf0,0x12,0xdf,0x03,0xd1,0x75,0xb7}};
+extern "C" const GUID __declspec(selectany) CLSID_KHOpenAPI =
+    {0xa1574a0d,0x6bfa,0x4bd7,{0x90,0x20,0xde,0xd8,0x87,0x11,0x81,0x8d}};
+
+//
+// Wrapper method implementations
+//
+
+#include "khopenapi.tli"
+
+#pragma pack(pop)

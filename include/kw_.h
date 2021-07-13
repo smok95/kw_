@@ -1,5 +1,5 @@
-/*
-*	kw_ - Ε°ΏςΑυ±Η OpenAPI+ C wrapper
+ο»Ώ/*
+*	kw_ - ν‚¤μ›€μ¦κ¶ OpenAPI+ C wrapper
 * 
 *	https://github.com/smok95/kw_
 *	2021.07.10 kim,jk <d0nzs00n@gmail.com>

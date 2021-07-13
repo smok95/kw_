@@ -1,0 +1,446 @@
+﻿// Created by Microsoft (R) C/C++ Compiler Version 14.28.29336.0 (075c6775).
+//
+// D:\dev\packages\kw_\build\Obj\Release\kw_\khopenapi.tli
+//
+// Wrapper implementations for Win32 type library C:\OpenAPI\khopenapi.ocx
+// compiler-generated file created 07/13/21 at 12:30:15 - DO NOT EDIT!
+
+#pragma once
+
+//
+// dispinterface _DKHOpenAPI wrapper method implementations
+//
+
+inline long _DKHOpenAPI::CommConnect ( ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x1, DISPATCH_METHOD, VT_I4, (void*)&_result, NULL);
+    return _result;
+}
+
+inline HRESULT _DKHOpenAPI::CommTerminate ( ) {
+    return _com_dispatch_method(this, 0x2, DISPATCH_METHOD, VT_EMPTY, NULL, NULL);
+}
+
+inline long _DKHOpenAPI::CommRqData ( _bstr_t sRQName, _bstr_t sTrCode, long nPrevNext, _bstr_t sScreenNo ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x3, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0008\x0003\x0008", (BSTR)sRQName, (BSTR)sTrCode, nPrevNext, (BSTR)sScreenNo);
+    return _result;
+}
+
+inline _bstr_t _DKHOpenAPI::GetLoginInfo ( _bstr_t sTag ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x4, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)sTag);
+    return _bstr_t(_result, false);
+}
+
+inline long _DKHOpenAPI::SendOrder ( _bstr_t sRQName, _bstr_t sScreenNo, _bstr_t sAccNo, long nOrderType, _bstr_t sCode, long nQty, long nPrice, _bstr_t sHogaGb, _bstr_t sOrgOrderNo ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x5, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0008\x0008\x0003\x0008\x0003\x0003\x0008\x0008", (BSTR)sRQName, (BSTR)sScreenNo, (BSTR)sAccNo, nOrderType, (BSTR)sCode, nQty, nPrice, (BSTR)sHogaGb, (BSTR)sOrgOrderNo);
+    return _result;
+}
+
+inline long _DKHOpenAPI::SendOrderFO ( _bstr_t sRQName, _bstr_t sScreenNo, _bstr_t sAccNo, _bstr_t sCode, long lOrdKind, _bstr_t sSlbyTp, _bstr_t sOrdTp, long lQty, _bstr_t sPrice, _bstr_t sOrgOrdNo ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x6, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0008\x0008\x0008\x0003\x0008\x0008\x0003\x0008\x0008", (BSTR)sRQName, (BSTR)sScreenNo, (BSTR)sAccNo, (BSTR)sCode, lOrdKind, (BSTR)sSlbyTp, (BSTR)sOrdTp, lQty, (BSTR)sPrice, (BSTR)sOrgOrdNo);
+    return _result;
+}
+
+inline HRESULT _DKHOpenAPI::SetInputValue ( _bstr_t sID, _bstr_t sValue ) {
+    return _com_dispatch_method(this, 0x7, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0008", (BSTR)sID, (BSTR)sValue);
+}
+
+inline long _DKHOpenAPI::SetOutputFID ( _bstr_t sID ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x8, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008", (BSTR)sID);
+    return _result;
+}
+
+inline _bstr_t _DKHOpenAPI::CommGetData ( _bstr_t sJongmokCode, _bstr_t sRealType, _bstr_t sFieldName, long nIndex, _bstr_t sInnerFieldName ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x9, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0008\x0008\x0003\x0008", (BSTR)sJongmokCode, (BSTR)sRealType, (BSTR)sFieldName, nIndex, (BSTR)sInnerFieldName);
+    return _bstr_t(_result, false);
+}
+
+inline HRESULT _DKHOpenAPI::DisconnectRealData ( _bstr_t sScnNo ) {
+    return _com_dispatch_method(this, 0xa, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008", (BSTR)sScnNo);
+}
+
+inline long _DKHOpenAPI::GetRepeatCnt ( _bstr_t sTrCode, _bstr_t sRecordName ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0xb, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0008", (BSTR)sTrCode, (BSTR)sRecordName);
+    return _result;
+}
+
+inline long _DKHOpenAPI::CommKwRqData ( _bstr_t sArrCode, long bNext, int nCodeCount, int nTypeFlag, _bstr_t sRQName, _bstr_t sScreenNo ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0xc, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0003\x0003\x0003\x0008\x0008", (BSTR)sArrCode, bNext, nCodeCount, nTypeFlag, (BSTR)sRQName, (BSTR)sScreenNo);
+    return _result;
+}
+
+inline _bstr_t _DKHOpenAPI::GetAPIModulePath ( ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0xd, DISPATCH_METHOD, VT_BSTR, (void*)&_result, NULL);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetCodeListByMarket ( _bstr_t sMarket ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0xe, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)sMarket);
+    return _bstr_t(_result, false);
+}
+
+inline long _DKHOpenAPI::GetConnectState ( ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0xf, DISPATCH_METHOD, VT_I4, (void*)&_result, NULL);
+    return _result;
+}
+
+inline _bstr_t _DKHOpenAPI::GetMasterCodeName ( _bstr_t sTrCode ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x10, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)sTrCode);
+    return _bstr_t(_result, false);
+}
+
+inline long _DKHOpenAPI::GetMasterListedStockCnt ( _bstr_t sTrCode ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x11, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008", (BSTR)sTrCode);
+    return _result;
+}
+
+inline _bstr_t _DKHOpenAPI::GetMasterConstruction ( _bstr_t sTrCode ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x12, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)sTrCode);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetMasterListedStockDate ( _bstr_t sTrCode ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x13, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)sTrCode);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetMasterLastPrice ( _bstr_t sTrCode ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x14, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)sTrCode);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetMasterStockState ( _bstr_t sTrCode ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x15, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)sTrCode);
+    return _bstr_t(_result, false);
+}
+
+inline long _DKHOpenAPI::GetDataCount ( _bstr_t strRecordName ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x16, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008", (BSTR)strRecordName);
+    return _result;
+}
+
+inline _bstr_t _DKHOpenAPI::GetOutputValue ( _bstr_t strRecordName, long nRepeatIdx, long nItemIdx ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x17, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0003\x0003", (BSTR)strRecordName, nRepeatIdx, nItemIdx);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetCommData ( _bstr_t strTrCode, _bstr_t strRecordName, long nIndex, _bstr_t strItemName ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x18, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0008\x0003\x0008", (BSTR)strTrCode, (BSTR)strRecordName, nIndex, (BSTR)strItemName);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetCommRealData ( _bstr_t sTrCode, long nFid ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x19, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0003", (BSTR)sTrCode, nFid);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetChejanData ( long nFid ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x1a, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0003", nFid);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetThemeGroupList ( long nType ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x1b, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0003", nType);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetThemeGroupCode ( _bstr_t strThemeCode ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x1c, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)strThemeCode);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetFutureList ( ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x1d, DISPATCH_METHOD, VT_BSTR, (void*)&_result, NULL);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetFutureCodeByIndex ( int nIndex ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x1e, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0003", nIndex);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetActPriceList ( ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x1f, DISPATCH_METHOD, VT_BSTR, (void*)&_result, NULL);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetMonthList ( ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x20, DISPATCH_METHOD, VT_BSTR, (void*)&_result, NULL);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetOptionCode ( _bstr_t strActPrice, int nCp, _bstr_t strMonth ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x21, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0003\x0008", (BSTR)strActPrice, nCp, (BSTR)strMonth);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetOptionCodeByMonth ( _bstr_t sTrCode, int nCp, _bstr_t strMonth ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x22, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0003\x0008", (BSTR)sTrCode, nCp, (BSTR)strMonth);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetOptionCodeByActPrice ( _bstr_t sTrCode, int nCp, int nTick ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x23, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0003\x0003", (BSTR)sTrCode, nCp, nTick);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSFutureList ( _bstr_t strBaseAssetCode ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x24, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)strBaseAssetCode);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSFutureCodeByIndex ( _bstr_t strBaseAssetCode, int nIndex ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x25, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0003", (BSTR)strBaseAssetCode, nIndex);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSActPriceList ( _bstr_t strBaseAssetGb ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x26, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)strBaseAssetGb);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSMonthList ( _bstr_t strBaseAssetGb ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x27, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)strBaseAssetGb);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSOptionCode ( _bstr_t strBaseAssetGb, _bstr_t strActPrice, int nCp, _bstr_t strMonth ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x28, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0008\x0003\x0008", (BSTR)strBaseAssetGb, (BSTR)strActPrice, nCp, (BSTR)strMonth);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSOptionCodeByMonth ( _bstr_t strBaseAssetGb, _bstr_t sTrCode, int nCp, _bstr_t strMonth ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x29, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0008\x0003\x0008", (BSTR)strBaseAssetGb, (BSTR)sTrCode, nCp, (BSTR)strMonth);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSOptionCodeByActPrice ( _bstr_t strBaseAssetGb, _bstr_t sTrCode, int nCp, int nTick ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x2a, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0008\x0003\x0003", (BSTR)strBaseAssetGb, (BSTR)sTrCode, nCp, nTick);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSFOBasisAssetList ( ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x2b, DISPATCH_METHOD, VT_BSTR, (void*)&_result, NULL);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetOptionATM ( ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x2c, DISPATCH_METHOD, VT_BSTR, (void*)&_result, NULL);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetSOptionATM ( _bstr_t strBaseAssetGb ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x2d, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008", (BSTR)strBaseAssetGb);
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t _DKHOpenAPI::GetBranchCodeName ( ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x2e, DISPATCH_METHOD, VT_BSTR, (void*)&_result, NULL);
+    return _bstr_t(_result, false);
+}
+
+inline long _DKHOpenAPI::CommInvestRqData ( _bstr_t sMarketGb, _bstr_t sRQName, _bstr_t sScreenNo ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x2f, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0008\x0008", (BSTR)sMarketGb, (BSTR)sRQName, (BSTR)sScreenNo);
+    return _result;
+}
+
+inline long _DKHOpenAPI::SendOrderCredit ( _bstr_t sRQName, _bstr_t sScreenNo, _bstr_t sAccNo, long nOrderType, _bstr_t sCode, long nQty, long nPrice, _bstr_t sHogaGb, _bstr_t sCreditGb, _bstr_t sLoanDate, _bstr_t sOrgOrderNo ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x30, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0008\x0008\x0003\x0008\x0003\x0003\x0008\x0008\x0008\x0008", (BSTR)sRQName, (BSTR)sScreenNo, (BSTR)sAccNo, nOrderType, (BSTR)sCode, nQty, nPrice, (BSTR)sHogaGb, (BSTR)sCreditGb, (BSTR)sLoanDate, (BSTR)sOrgOrderNo);
+    return _result;
+}
+
+inline _bstr_t _DKHOpenAPI::KOA_Functions ( _bstr_t sFunctionName, _bstr_t sParam ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x31, DISPATCH_METHOD, VT_BSTR, (void*)&_result, 
+        L"\x0008\x0008", (BSTR)sFunctionName, (BSTR)sParam);
+    return _bstr_t(_result, false);
+}
+
+inline long _DKHOpenAPI::SetInfoData ( _bstr_t sInfoData ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x32, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008", (BSTR)sInfoData);
+    return _result;
+}
+
+inline long _DKHOpenAPI::SetRealReg ( _bstr_t strScreenNo, _bstr_t strCodeList, _bstr_t strFidList, _bstr_t strOptType ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x33, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0008\x0008\x0008", (BSTR)strScreenNo, (BSTR)strCodeList, (BSTR)strFidList, (BSTR)strOptType);
+    return _result;
+}
+
+inline long _DKHOpenAPI::GetConditionLoad ( ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x34, DISPATCH_METHOD, VT_I4, (void*)&_result, NULL);
+    return _result;
+}
+
+inline _bstr_t _DKHOpenAPI::GetConditionNameList ( ) {
+    BSTR _result = 0;
+    _com_dispatch_method(this, 0x35, DISPATCH_METHOD, VT_BSTR, (void*)&_result, NULL);
+    return _bstr_t(_result, false);
+}
+
+inline long _DKHOpenAPI::SendCondition ( _bstr_t strScrNo, _bstr_t strConditionName, int nIndex, int nSearch ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x36, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008\x0008\x0003\x0003", (BSTR)strScrNo, (BSTR)strConditionName, nIndex, nSearch);
+    return _result;
+}
+
+inline HRESULT _DKHOpenAPI::SendConditionStop ( _bstr_t strScrNo, _bstr_t strConditionName, int nIndex ) {
+    return _com_dispatch_method(this, 0x37, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0008\x0003", (BSTR)strScrNo, (BSTR)strConditionName, nIndex);
+}
+
+inline _variant_t _DKHOpenAPI::GetCommDataEx ( _bstr_t strTrCode, _bstr_t strRecordName ) {
+    VARIANT _result;
+    VariantInit(&_result);
+    _com_dispatch_method(this, 0x38, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x0008\x0008", (BSTR)strTrCode, (BSTR)strRecordName);
+    return _variant_t(_result, false);
+}
+
+inline HRESULT _DKHOpenAPI::SetRealRemove ( _bstr_t strScrNo, _bstr_t strDelCode ) {
+    return _com_dispatch_method(this, 0x39, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0008", (BSTR)strScrNo, (BSTR)strDelCode);
+}
+
+inline long _DKHOpenAPI::GetMarketType ( _bstr_t sTrCode ) {
+    long _result = 0;
+    _com_dispatch_method(this, 0x3a, DISPATCH_METHOD, VT_I4, (void*)&_result, 
+        L"\x0008", (BSTR)sTrCode);
+    return _result;
+}
+
+//
+// dispinterface _DKHOpenAPIEvents wrapper method implementations
+//
+
+inline HRESULT _DKHOpenAPIEvents::OnReceiveTrData ( _bstr_t sScrNo, _bstr_t sRQName, _bstr_t sTrCode, _bstr_t sRecordName, _bstr_t sPrevNext, long nDataLength, _bstr_t sErrorCode, _bstr_t sMessage, _bstr_t sSplmMsg ) {
+    return _com_dispatch_method(this, 0x1, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0008\x0008\x0008\x0008\x0003\x0008\x0008\x0008", (BSTR)sScrNo, (BSTR)sRQName, (BSTR)sTrCode, (BSTR)sRecordName, (BSTR)sPrevNext, nDataLength, (BSTR)sErrorCode, (BSTR)sMessage, (BSTR)sSplmMsg);
+}
+
+inline HRESULT _DKHOpenAPIEvents::OnReceiveRealData ( _bstr_t sRealKey, _bstr_t sRealType, _bstr_t sRealData ) {
+    return _com_dispatch_method(this, 0x2, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0008\x0008", (BSTR)sRealKey, (BSTR)sRealType, (BSTR)sRealData);
+}
+
+inline HRESULT _DKHOpenAPIEvents::OnReceiveMsg ( _bstr_t sScrNo, _bstr_t sRQName, _bstr_t sTrCode, _bstr_t sMsg ) {
+    return _com_dispatch_method(this, 0x3, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0008\x0008\x0008", (BSTR)sScrNo, (BSTR)sRQName, (BSTR)sTrCode, (BSTR)sMsg);
+}
+
+inline HRESULT _DKHOpenAPIEvents::OnReceiveChejanData ( _bstr_t sGubun, long nItemCnt, _bstr_t sFIdList ) {
+    return _com_dispatch_method(this, 0x4, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0003\x0008", (BSTR)sGubun, nItemCnt, (BSTR)sFIdList);
+}
+
+inline HRESULT _DKHOpenAPIEvents::OnEventConnect ( long nErrCode ) {
+    return _com_dispatch_method(this, 0x5, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0003", nErrCode);
+}
+
+inline HRESULT _DKHOpenAPIEvents::OnReceiveInvestRealData ( _bstr_t sRealKey ) {
+    return _com_dispatch_method(this, 0x6, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008", (BSTR)sRealKey);
+}
+
+inline HRESULT _DKHOpenAPIEvents::OnReceiveRealCondition ( _bstr_t sTrCode, _bstr_t strType, _bstr_t strConditionName, _bstr_t strConditionIndex ) {
+    return _com_dispatch_method(this, 0x7, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0008\x0008\x0008", (BSTR)sTrCode, (BSTR)strType, (BSTR)strConditionName, (BSTR)strConditionIndex);
+}
+
+inline HRESULT _DKHOpenAPIEvents::OnReceiveTrCondition ( _bstr_t sScrNo, _bstr_t strCodeList, _bstr_t strConditionName, int nIndex, int nNext ) {
+    return _com_dispatch_method(this, 0x8, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0008\x0008\x0008\x0003\x0003", (BSTR)sScrNo, (BSTR)strCodeList, (BSTR)strConditionName, nIndex, nNext);
+}
+
+inline HRESULT _DKHOpenAPIEvents::OnReceiveConditionVer ( long lRet, _bstr_t sMsg ) {
+    return _com_dispatch_method(this, 0x9, DISPATCH_METHOD, VT_EMPTY, NULL, 
+        L"\x0003\x0008", lRet, (BSTR)sMsg);
+}

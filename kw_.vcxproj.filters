@@ -19,6 +19,7 @@
     <ClInclude Include="src\kwapi.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\kw_.cpp">
@@ -27,5 +28,10 @@
     <ClCompile Include="src\kwapi.cpp">
       <Filter>src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -564,9 +564,9 @@ long kw_CommKwRqDataA(PCSTR sArrCode, long bNext, int nCodeCount,
 
 
 void kw_Wait() {
+
 	MSG msg;
-	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-		TranslateMessage(&msg);
+	while (GetMessage(&msg, nullptr, 0, 0) != 0) {
 		DispatchMessage(&msg);
 	}
 }

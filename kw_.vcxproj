@@ -20,11 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\kw_.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\kwapi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\kw_.cpp" />
     <ClCompile Include="src\kwapi.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
