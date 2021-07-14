@@ -431,7 +431,9 @@ public:
 	inline char* bstrToString(BSTR bstr) {
 		if (useUtf8_) {
 			const UINT len = SysStringLen(bstr);
-			if (len == 0) return nullptr;
+			if (len == 0) {
+				return _strdup("");
+			}
 			const int sizeNeeded = WideCharToMultiByte(CP_UTF8, 0, bstr, len,
 				nullptr, 0, nullptr, nullptr);
 			char* utf8 = (char*)calloc(sizeNeeded, sizeNeeded);

@@ -215,42 +215,42 @@ KW_API void		kw_SetRealRemoveA(PCSTR strScrNo, PCSTR strDelCode);
 KW_API long		kw_GetMarketTypeW(PCWSTR sTrCode);
 KW_API long		kw_GetMarketTypeA(PCSTR sTrCode);
 
-typedef void (CALLBACK* kw_OnEventConnect)(long nErrCode);
+typedef void (*kw_OnEventConnect)(long nErrCode);
 
-typedef void (CALLBACK* kw_OnReceiveTrDataW)(PCWSTR sScrNo, PCWSTR sRQName,
+typedef void (*kw_OnReceiveTrDataW)(PCWSTR sScrNo, PCWSTR sRQName,
 	PCWSTR sTrCode, PCWSTR sRecordName, PCWSTR sPrevNext, long nDataLength,
 	PCWSTR sErrorCode, PCWSTR sMessage, PCWSTR sSplmMsg);
-typedef void (CALLBACK* kw_OnReceiveTrDataA)(PCSTR sScrNo, PCSTR sRQName,
+typedef void (*kw_OnReceiveTrDataA)(PCSTR sScrNo, PCSTR sRQName,
 	PCSTR sTrCode, PCSTR sRecordName, PCSTR sPrevNext, long nDataLength,
 	PCSTR sErrorCode, PCSTR sMessage, PCSTR sSplmMsg);
 
-typedef void (CALLBACK* kw_OnReceiveRealDataW)(PCWSTR sRealKey,
+typedef void (*kw_OnReceiveRealDataW)(PCWSTR sRealKey,
 	PCWSTR sRealType, PCWSTR sRealData);
-typedef void (CALLBACK* kw_OnReceiveRealDataA)(PCSTR sRealKey,
+typedef void (*kw_OnReceiveRealDataA)(PCSTR sRealKey,
 	PCSTR sRealType, PCSTR sRealData);
 
-typedef void (CALLBACK* kw_OnReceiveMsgW)(PCWSTR sScrNo, PCWSTR sRQName,
+typedef void (*kw_OnReceiveMsgW)(PCWSTR sScrNo, PCWSTR sRQName,
 	PCWSTR sTrCode, PCWSTR sMsg);
-typedef void (CALLBACK* kw_OnReceiveMsgA)(PCSTR sScrNo, PCSTR sRQName,
+typedef void (*kw_OnReceiveMsgA)(PCSTR sScrNo, PCSTR sRQName,
 	PCSTR sTrCode, PCSTR sMsg);
 
-typedef void (CALLBACK* kw_OnReceiveChejanDataW)(PCWSTR sGubun, long nItemCnt,
+typedef void (*kw_OnReceiveChejanDataW)(PCWSTR sGubun, long nItemCnt,
 	PCWSTR sFIdList);
-typedef void (CALLBACK* kw_OnReceiveChejanDataA)(PCSTR sGubun, long nItemCnt,
+typedef void (*kw_OnReceiveChejanDataA)(PCSTR sGubun, long nItemCnt,
 	PCSTR sFIdList);
 
-typedef void (CALLBACK* kw_OnReceiveRealConditionW)(PCWSTR sTrCode,
+typedef void (*kw_OnReceiveRealConditionW)(PCWSTR sTrCode,
 	PCWSTR strType, PCWSTR strConditionName, PCWSTR strConditionIndex);
-typedef void (CALLBACK* kw_OnReceiveRealConditionA)(PCSTR sTrCode,
+typedef void (*kw_OnReceiveRealConditionA)(PCSTR sTrCode,
 	PCSTR strType, PCSTR strConditionName, PCSTR strConditionIndex);
 
-typedef void (CALLBACK* kw_OnReceiveTrConditionW)(PCWSTR sScrNo,
+typedef void (*kw_OnReceiveTrConditionW)(PCWSTR sScrNo,
 	PCWSTR strCodeList, PCWSTR strConditionName, int nIndex, int nNext);
-typedef void (CALLBACK* kw_OnReceiveTrConditionA)(PCSTR sScrNo,
+typedef void (*kw_OnReceiveTrConditionA)(PCSTR sScrNo,
 	PCSTR strCodeList, PCSTR strConditionName, int nIndex, int nNext);
 
-typedef void (CALLBACK* kw_OnReceiveConditionVerW)(long lRet, PCWSTR sMsg);
-typedef void (CALLBACK* kw_OnReceiveConditionVerA)(long lRet, PCSTR sMsg);
+typedef void (*kw_OnReceiveConditionVerW)(long lRet, PCWSTR sMsg);
+typedef void (*kw_OnReceiveConditionVerA)(long lRet, PCSTR sMsg);
 
 KW_API void kw_SetOnEventConnect(kw_OnEventConnect handler);
 

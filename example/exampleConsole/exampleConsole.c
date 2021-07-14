@@ -3,7 +3,7 @@
 #include "kw_.h"
 #pragma comment(lib, "kw_.lib")
 
-void CALLBACK OnEventConnect(long errCode) {
+void OnEventConnect(long errCode) {
     if (errCode == 0) {
         puts("로그인 성공");
         
@@ -14,7 +14,7 @@ void CALLBACK OnEventConnect(long errCode) {
     }
     else {
         puts("로그인 실패");
-        exit(0);
+        kw_Disconnect();
     }
 }
 
