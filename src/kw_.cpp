@@ -589,6 +589,11 @@ void kw_Wait() {
 	}
 }
 
+void kw_Disconnect() {
+	return api_.Disconnect();
+}
+
+
 wchar_t* utf8ToUnicode(const char* utf8) {
 	if (!utf8) return nullptr;
 	const size_t len = strlen(utf8);

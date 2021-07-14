@@ -279,6 +279,7 @@ KW_API void kw_Wait();
 KW_API void kw_Free(void* p);
 KW_API void kw_FreeStringW(PWSTR p);
 KW_API void kw_FreeStringA(PSTR p);
+KW_API void kw_Disconnect();
 
 // MBCS (Multibyte Character Set)일 때 UTF8 인코딩 여부 설정 (1이면UTF8 사용)
 KW_API void kw_SetCharsetUtf8(int useUtf8);

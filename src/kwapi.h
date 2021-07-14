@@ -1,6 +1,9 @@
 #pragma once
 #include <oleidl.h>
+#include <atlcomcli.h>
+
 #include "kw_.h"
+
 
 #ifndef OVERRIDE
 #define OVERRIDE override
@@ -112,6 +115,7 @@ public:
 
 
 	long commConnect();
+	void Disconnect();
 		
 	inline long CommRqData(_bstr_t sRQName, _bstr_t sTrCode, long nPrevNext,
 		_bstr_t sScreenNo) {
@@ -442,9 +446,12 @@ public:
 private:
 	kwevent event_;
 	ULONG refCount_ = 0;
+	CComPtr<IOleObject> oleObj_;
+	CComPtr<IConnectionPoint> connectPoint_;
 	bool oleInitialized_ = false;
 	bool useUtf8_ = false;
 	_DKHOpenAPIPtr v;
+	HWND hControlWnd_ = nullptr;
 
 	kw_OnEventConnect onEventConnect_ = nullptr;
 

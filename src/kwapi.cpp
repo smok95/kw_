@@ -3,7 +3,6 @@
 #include <atlconv.h>
 #include <string>
 #include <ciso646>
-#include <atlcomcli.h>
 #include <sstream>
 using namespace std;
 
@@ -20,6 +19,8 @@ kwapi::kwapi() : event_(*this){
 }
 
 kwapi::~kwapi() {
+	Disconnect();
+
 	if (oleInitialized_) {
 		OleUninitialize();
 		oleInitialized_ = false;
@@ -28,28 +29,27 @@ kwapi::~kwapi() {
 
 bool kwapi::create() {
 
-	CComPtr<IOleObject> oleObj;
 	HRESULT hr = OleCreate(__uuidof(KHOpenAPI), IID_IOleObject,
-		OLERENDER_NONE, nullptr, this, this, (void**)&oleObj);
+		OLERENDER_NONE, nullptr, this, this, (void**)&oleObj_);
 
 	if (FAILED(hr)) {
 		return false;
 	}
 
-	hr = oleObj->SetClientSite(this);
+	hr = oleObj_->SetClientSite(this);
 
-	//hr = OleSetContainedObject(oleObj, TRUE);
-	// oleObj->SetHostNames(L"test", L"test");
-	hr = oleObj->DoVerb(OLEIVERB_OPEN, nullptr, this, 0, 0, nullptr);
+	//hr = OleSetContainedObject(oleObj_, TRUE);
+	// oleObj_->SetHostNames(L"test", L"test");
+	hr = oleObj_->DoVerb(OLEIVERB_OPEN, nullptr, this, 0, 0, nullptr);
 	if (FAILED(hr)) {
 		return false;
 	}
 
-	HWND hControlWnd = FindWindow(_T("AfxWnd100"), _T("KHOpenAPI Control"));
-	if (hControlWnd) {
-		ShowWindow(hControlWnd, SW_HIDE);
+	HWND hControlWnd_ = FindWindow(_T("AfxWnd100"), _T("KHOpenAPI Control"));
+	if (hControlWnd_) {
+		ShowWindow(hControlWnd_, SW_HIDE);
 	}
-	oleObj->QueryInterface(&v);
+	oleObj_->QueryInterface(&v);
 
 	CComQIPtr<IConnectionPointContainer, &IID_IConnectionPointContainer> cpc;
 
@@ -58,52 +58,25 @@ bool kwapi::create() {
 		return false;
 	}
 
-	CComPtr<IConnectionPoint> cp;
-	hr = cpc->FindConnectionPoint(__uuidof(_DKHOpenAPIEvents), &cp);
+	hr = cpc->FindConnectionPoint(__uuidof(_DKHOpenAPIEvents), &connectPoint_);
 	if (FAILED(hr)) {
 		return false;
 	}
 
-	hr = cp->Advise(&event_, &event_.cookie());
-
-
-	//HMODULE hDll = LoadLibrary("axKiwoom.dll");
-	/*
-	USES_CONVERSION;
-	CLSID clsid;
-
-	LPOLESTR progid = (LPOLESTR)L"KHOPENAPI.KHOpenAPICtrl";
-	hr = CLSIDFromProgID(progid, &clsid);
-	//if (FAILED(hr)) return;
-
-	_DKHOpenAPIPtr api;
-
-	hr = CoCreateInstance(__uuidof(KHOpenAPI), nullptr, CLSCTX_INPROC_SERVER,
-	__uuidof(_DKHOpenAPI), (void**)&api);
-
-	try
-	{
-		//auto path = api->GetAPIModulePath();
-		//api->CommConnect();
-
-	}
-	catch (_com_error& e) {
-	}
-
-	while (true) {
-		MSG msg;
-		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-	}
-	*/
-
-	//auto path = api->GetAPIModulePath();
-
-	//SetCurrentDirectory(path);
-
+	hr = connectPoint_->Advise(&event_, &event_.cookie());
 	return true;
+}
+
+void kwapi::Disconnect() {
+	if (connectPoint_) {
+		connectPoint_->Unadvise(event_.cookie());
+	}
+
+	if (oleObj_) {
+		oleObj_.Release();
+	}
+
+	PostQuitMessage(0);
 }
 
 COMAPI kwapi::QueryInterface(REFIID riid, void** ppvObject) {
