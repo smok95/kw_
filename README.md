@@ -23,7 +23,7 @@ https://download.kiwoom.com/web/openapi/kiwoom_openapi_plus_devguide_ver_1.5.pdf
 #include "kw_.h"
 #pragma comment(lib, "kw_.lib")
 
-void CALLBACK OnEventConnect(long errCode) {
+void OnEventConnect(long errCode) {
   if (errCode == 0) {
     puts("로그인 성공");
 
