@@ -598,7 +598,9 @@ wchar_t* utf8ToUnicode(const char* utf8) {
 	if (!utf8) return nullptr;
 	const size_t len = strlen(utf8);
 	const int sizeNeeded = MultiByteToWideChar(CP_UTF8, 0, utf8, len, nullptr, 0);
-	if (sizeNeeded == 0) return nullptr;
+	if (sizeNeeded == 0) {
+		return _wcsdup(L"");
+	}
 
 	wchar_t* unicode = (wchar_t*)calloc(sizeNeeded+1, sizeof(wchar_t));
 	MultiByteToWideChar(CP_UTF8, 0, utf8, len, unicode, sizeNeeded);
