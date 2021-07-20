@@ -589,6 +589,19 @@ void kw_Wait() {
 	}
 }
 
+void kw_Sleep(int msec) {
+	MSG msg;
+	auto tick = GetTickCount64();
+	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+
+		if (msec < (GetTickCount64() - tick)) {
+			break;
+		}
+	}
+}
+
 void kw_Disconnect() {
 	return api_.Disconnect();
 }

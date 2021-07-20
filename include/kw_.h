@@ -22,7 +22,7 @@
 extern "C" {
 #endif // __cplusplus
 
-	KW_API long		kw_CommConnect();
+KW_API long		kw_CommConnect();
 
 KW_API long		kw_CommRqDataW(PCWSTR sRQName, PCWSTR sTrCode, long nPrevNext, 
 	PCWSTR sScreenNo);
@@ -283,6 +283,8 @@ KW_API void kw_Disconnect();
 
 // MBCS (Multibyte Character Set)일 때 UTF8 인코딩 여부 설정 (1이면UTF8 사용)
 KW_API void kw_SetCharsetUtf8(int useUtf8);
+
+KW_API void kw_Sleep(int msec);
 
 #ifdef _UNICODE
 #define kw_SetOnReceiveConditionVer kw_SetOnReceiveConditionVerW
