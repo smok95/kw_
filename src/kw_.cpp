@@ -592,12 +592,10 @@ void kw_Wait() {
 void kw_Sleep(int msec) {
 	MSG msg;
 	auto tick = GetTickCount64();
-	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-
-		if (msec < (GetTickCount64() - tick)) {
-			break;
+	while (msec > (GetTickCount64() - tick)) {
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
 	}
 }
