@@ -1,6 +1,7 @@
 #include "kw_.h"
 #include <string>
 #include <codecvt>
+#include <thread>
 #include "kwapi.h"
 
 using namespace std;
@@ -11,6 +12,8 @@ static wstring utf8ToWstr(const char* utf8);
 static wstring_convert<codecvt_utf8<wchar_t>> u8_u16_conv;
 
 kwapi api_;
+kwapi* pApi_ = nullptr;
+thread thread_;
 
 #define B2W(bstr) _wcsdup(bstr)
 #define B2A(bstr) api_.bstrToString(bstr)
@@ -26,7 +29,11 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		return api_.create() ? TRUE : FALSE;
+	{
+		
+		
+	}
+		//return api_.create() ? TRUE : FALSE;
 		break;
 	case DLL_PROCESS_DETACH:
 		break;
@@ -35,7 +42,33 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 }
 
 void kw_SetOnEventConnect(kw_OnEventConnect handler) {
-	api_.setOnEventConnectHandler(handler);
+
+	thread_ = thread([](kwapi** api) {
+		auto p = new kwapi();
+		p->create();
+
+		*api = p;
+
+		MSG msg;
+		while (GetMessage(&msg, nullptr, 0, 0) != 0) {
+			DispatchMessage(&msg);
+		}
+
+		printf("exit");
+
+		}, &pApi_);
+
+	while (true) {
+		if (pApi_) {
+		pApi_->setOnEventConnectHandler(handler);
+			break;
+		}
+
+		Sleep(100);
+	}
+
+	
+	//jktest api_.setOnEventConnectHandler(handler);
 }
 
 void kw_SetOnReceiveTrDataW(kw_OnReceiveTrDataW handler) {
@@ -112,7 +145,8 @@ void kw_SetCharsetUtf8(int useUtf8) {
 }
 
 long kw_CommConnect() {
-	return api_.commConnect();
+	return pApi_->commConnect();
+	//jktest return api_.commConnect();
 }
 
 long kw_GetConnectState() {
