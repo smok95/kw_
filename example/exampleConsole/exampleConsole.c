@@ -26,6 +26,10 @@ int main()
 	// 로그인
     kw_CommConnect();
     
-    kw_Wait();
+    //kw_Wait();
+
+    while (1) {
+        Sleep(100);
+    }
     return 0;
 }
