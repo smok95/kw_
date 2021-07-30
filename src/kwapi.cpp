@@ -12,10 +12,6 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////
 
 kwapi::kwapi() : event_(*this){
-	HRESULT hr = OleInitialize(nullptr);
-	if (SUCCEEDED(hr)) {
-		oleInitialized_ = true;
-	}
 }
 
 kwapi::~kwapi() {
@@ -28,6 +24,13 @@ kwapi::~kwapi() {
 }
 
 bool kwapi::create() {
+	HRESULT hr = OleInitialize(nullptr);
+	if (SUCCEEDED(hr)) {
+		oleInitialized_ = true;
+	}
+	else {
+		return false;
+	}
 
 	HRESULT hr = OleCreate(__uuidof(KHOpenAPI), IID_IOleObject,
 		OLERENDER_NONE, nullptr, this, this, (void**)&oleObj_);

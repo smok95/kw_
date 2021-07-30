@@ -12,7 +12,6 @@ static wstring utf8ToWstr(const char* utf8);
 static wstring_convert<codecvt_utf8<wchar_t>> u8_u16_conv;
 
 kwapi api_;
-kwapi* pApi_ = nullptr;
 thread thread_;
 
 #define B2W(bstr) _wcsdup(bstr)
@@ -21,33 +20,19 @@ thread thread_;
 #define A2B(astr) stringToBstr(astr)
 ///////////////////////////////////////////////////////////////////////////////
 
-BOOL APIENTRY DllMain(HMODULE hModule,
-	DWORD  ul_reason_for_call,
-	LPVOID lpReserved
-)
-{
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, 
+	LPVOID lpReserved) {
 	switch (ul_reason_for_call)
 	{
-	case DLL_PROCESS_ATTACH:
-	{
-		
-		
-	}
-		//return api_.create() ? TRUE : FALSE;
-		break;
-	case DLL_PROCESS_DETACH:
-		break;
+	case DLL_PROCESS_ATTACH:break;
+	case DLL_PROCESS_DETACH:break;
 	}
 	return TRUE;
 }
 
-void kw_SetOnEventConnect(kw_OnEventConnect handler) {
-
-	thread_ = thread([](kwapi** api) {
-		auto p = new kwapi();
-		p->create();
-
-		*api = p;
+int	kw_Initialize() {
+	thread_ = thread([](kwapi* pApi) {
+		pApi->create();
 
 		MSG msg;
 		while (GetMessage(&msg, nullptr, 0, 0) != 0) {
@@ -56,35 +41,38 @@ void kw_SetOnEventConnect(kw_OnEventConnect handler) {
 
 		printf("exit");
 
-		}, &pApi_);
+		}, &api_);
 
-	while (true) {
-		if (pApi_) {
-		pApi_->setOnEventConnectHandler(handler);
-			break;
-		}
+	Sleep(1000);
+	return 0;
+}
 
-		Sleep(100);
-	}
+void kw_Uninitialize() {
 
-	
-	//jktest api_.setOnEventConnectHandler(handler);
+}
+
+void kw_SetOnEventConnect(kw_OnEventConnect handler) {
+	api_.setOnEventConnectHandler(handler);
 }
 
 void kw_SetOnReceiveTrDataW(kw_OnReceiveTrDataW handler) {
-	api_.setOnReceiveTrDataHandlerW(handler);
+	api_->setOnReceiveTrDataHandlerW(handler);
+	//jktest api_.setOnReceiveTrDataHandlerW(handler);
 }
 
 void kw_SetOnReceiveTrDataA(kw_OnReceiveTrDataA handler) {
-	api_.setOnReceiveTrDataHandlerA(handler);
+	api_->setOnReceiveTrDataHandlerA(handler);
+	//jktest api_.setOnReceiveTrDataHandlerA(handler);
 }
 
 void kw_SetOnReceiveRealDataW(kw_OnReceiveRealDataW handler) {
-	api_.SetOnReceiveRealDataW(handler);
+	api_->SetOnReceiveRealDataW(handler);
+	//api_.SetOnReceiveRealDataW(handler);
 }
 
 void kw_SetOnReceiveRealDataA(kw_OnReceiveRealDataA handler) {
-	api_.SetOnReceiveRealDataA(handler);
+	api_->SetOnReceiveRealDataA(handler);
+	//api_.SetOnReceiveRealDataA(handler);
 }
 
 void kw_SetOnReceiveMsgW(kw_OnReceiveMsgW handler) {
@@ -150,7 +138,8 @@ long kw_CommConnect() {
 }
 
 long kw_GetConnectState() {
-	return api_.GetConnectState();
+	return pApi_->GetConnectState();
+	//jktest return api_.GetConnectSate();
 }
 
 PWSTR kw_GetMasterCodeNameW(PCWSTR sTrCode) {
@@ -533,12 +522,14 @@ long kw_GetMarketTypeA(PCSTR sTrCode) {
 
 long kw_CommRqDataW(PCWSTR sRQName, PCWSTR sTrCode,
 	long nPrevNext, PCWSTR sScreenNo) {
-	return api_.CommRqData(sRQName, sTrCode, nPrevNext, sScreenNo);
+	return pApi_->CommRqData(sRQName, sTrCode, nPrevNext, sScreenNo);
+	//jktest return api_.CommRqData(sRQName, sTrCode, nPrevNext, sScreenNo);
 }
 
 long kw_CommRqDataA(PCSTR sRQName, PCSTR sTrCode,
 	long nPrevNext, PCSTR sScreenNo) {
-	return api_.CommRqData(A2B(sRQName), A2B(sTrCode), nPrevNext, A2B(sScreenNo));
+	return pApi_->CommRqData(A2B(sRQName), A2B(sTrCode), nPrevNext, A2B(sScreenNo));
+	//jktest return api_.CommRqData(A2B(sRQName), A2B(sTrCode), nPrevNext, A2B(sScreenNo));
 }
 
 PWSTR kw_GetLoginInfoW(PCWSTR sTag) {
@@ -579,11 +570,13 @@ long kw_SendOrderFOA(PCSTR sRQName, PCSTR sScreenNo, PCSTR sAccNo,
 }
 
 void kw_SetInputValueW(PCWSTR sID, PCWSTR sValue) {
-	api_.SetInputValue(sID, sValue);
+	pApi_->SetInputValue(sID, sValue);
+	//jktest api_.SetInputValue(sID, sValue);
 }
 
 void kw_SetInputValueA(PCSTR sID, PCSTR sValue) {
-	api_.SetInputValue(A2B(sID), A2B(sValue));
+	pApi_->SetInputValue(A2B(sID), A2B(sValue));
+	//jktest api_.SetInputValue(A2B(sID), A2B(sValue));
 }
 
 void kw_DisconnectRealDataW(PCWSTR sScnNo) {
@@ -610,8 +603,10 @@ long kw_CommKwRqDataW(PCWSTR sArrCode, long bNext, int nCodeCount,
 
 long kw_CommKwRqDataA(PCSTR sArrCode, long bNext, int nCodeCount,
 	int nTypeFlag, PCSTR sRQName, PCSTR sScreenNo) {
-	return api_.CommKwRqData(A2B(sArrCode), bNext, nCodeCount, nTypeFlag, 
+	return pApi_->CommKwRqData(A2B(sArrCode), bNext, nCodeCount, nTypeFlag,
 		A2B(sRQName), A2B(sScreenNo));
+	//jktest return api_.CommKwRqData(A2B(sArrCode), bNext, nCodeCount, nTypeFlag, 
+	//	A2B(sRQName), A2B(sScreenNo));
 }
 
 

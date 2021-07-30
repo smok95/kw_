@@ -22,6 +22,9 @@
 extern "C" {
 #endif // __cplusplus
 
+KW_API int		kw_Initialize();
+KW_API void		kw_Uninitialize();
+
 KW_API long		kw_CommConnect();
 
 KW_API long		kw_CommRqDataW(PCWSTR sRQName, PCWSTR sTrCode, long nPrevNext, 
