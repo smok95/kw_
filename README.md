@@ -39,6 +39,9 @@ void OnEventConnect(long errCode) {
 
 int main()
 {
+  // 초기화
+  kw_Initialize(0);
+  
   // 이벤트 핸들러 설정
   kw_SetOnEventConnect(OnEventConnect);
 
@@ -46,6 +49,8 @@ int main()
   kw_CommConnect();
 
   kw_Wait();    
+  
+  kw_Uninitizlize();
   return 0;
 }
 ```
