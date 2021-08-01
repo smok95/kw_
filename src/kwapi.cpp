@@ -105,8 +105,7 @@ void kwapi::waitMessageLoop() {
 
 	if (connectPoint_) {
 		connectPoint_.Release();
-	}
-	printf("%s\n", __FUNCTION__);
+	}	
 }
 
 COMAPI kwapi::QueryInterface(REFIID riid, void** ppvObject) {
