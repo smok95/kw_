@@ -21,8 +21,46 @@
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
-
-KW_API int		kw_Initialize();
+	
+// 리턴코드
+typedef enum OP_ERR {
+	OP_ERR_NONE					= 0,    // 정상처리
+	OP_ERR_FAIL					= -10,  // 실패
+	OP_ERR_COND_NOTFOUND		= -11,  // 조건번호 없음
+	OP_ERR_COND_MISMATCH		= -12,  // 조건번호와 조건식 틀림
+	OP_ERR_COND_OVERFLOW		= -13,  // 조건검색 조회요청 초과
+	OP_ERR_LOGIN				= -100, // 사용자정보 교환실패
+	OP_ERR_CONNECT				= -101, // 서버접속 실패
+	OP_ERR_VERSION				= -102, // 버전처리 실패
+	OP_ERR_FIREWALL				= -103, // 개인방화벽 실패
+	OP_ERR_MEMORY				= -104, // 메모리보호 실패
+	OP_ERR_INPUT				= -105, // 함수입력값 오류
+	OP_ERR_SOCKET_CLOSED		= -106, // 통신 연결종료
+	OP_ERR_SISE_OVERFLOW		= -200, // 시세조회 과부하
+	OP_ERR_RQ_STRUCT_FAIL		= -201, // 전문작성 초기화 실패
+	OP_ERR_RQ_STRING_FAIL		= -202, // 전문작성 입력값 오류
+	OP_ERR_NO_DATA				= -203, // 데이터 없음
+	OP_ERR_OVER_MAX_DATA		= -204, // 조회 가능한 종목수 초과
+	OP_ERR_DATA_RCV_FAIL		= -205, // 데이터수신 실패
+	OP_ERR_OVER_MAX_FID			= -206, // 조회 가능한 FID수초과
+	OP_ERR_REAL_CANCEL			= -207, // 실시간 해제 오류
+	OP_ERR_ORD_WRONG_INPUT		= -300, // 입력값 오류
+	OP_ERR_ORD_WRONG_ACCTNO		= -301, // 계좌 비밀번호 없음
+	OP_ERR_OTHER_ACC_USE		= -302, // 타인계좌사용 오류
+	OP_ERR_MIS_2BILL_EXC		= -303, // 주문가격이 20억원을 초과
+	OP_ERR_MIS_5BILL_EXC		= -304, // 주문가격이 50억원을 초과
+	OP_ERR_MIS_1PER_EXC			= -305, // 주문수량이 총발행주수의 1%초과오류
+	OP_ERR_MIS_3PER_EXC			= -306, // 주문수량이 총발행주수의 3%초과오류
+	OP_ERR_SEND_FAIL			= -307, // 주문전송 실패
+	OP_ERR_ORD_OVERFLOW			= -308, // 주문전송 과부하
+	OP_ERR_ORD_OVERFLOW2		= -311, // 주문전송 과부하
+	OP_ERR_MIS_300CNT_EXC		= -309, // 주문수량 300계약 초과
+	OP_ERR_MIS_500CNT_EXC		= -310, // 주문수량 500계약 초과
+	OP_ERR_ORD_WRONG_ACCTINFO	= -340, // 계좌정보없음
+	OP_ERR_ORD_SYMCODE_EMPTY	= -500, // 종목코드없음
+}OP_ERR;
+	
+KW_API long		kw_Initialize(int option);
 KW_API void		kw_Uninitialize();
 
 KW_API long		kw_CommConnect();

@@ -32,7 +32,7 @@ bool kwapi::create() {
 		return false;
 	}
 
-	HRESULT hr = OleCreate(__uuidof(KHOpenAPI), IID_IOleObject,
+	hr = OleCreate(__uuidof(KHOpenAPI), IID_IOleObject,
 		OLERENDER_NONE, nullptr, this, this, (void**)&oleObj_);
 
 	if (FAILED(hr)) {
@@ -41,14 +41,12 @@ bool kwapi::create() {
 
 	hr = oleObj_->SetClientSite(this);
 
-	//hr = OleSetContainedObject(oleObj_, TRUE);
-	// oleObj_->SetHostNames(L"test", L"test");
 	hr = oleObj_->DoVerb(OLEIVERB_OPEN, nullptr, this, 0, 0, nullptr);
 	if (FAILED(hr)) {
 		return false;
 	}
 
-	HWND hControlWnd_ = FindWindow(_T("AfxWnd100"), _T("KHOpenAPI Control"));
+	hControlWnd_ = FindWindow(_T("AfxWnd100"), _T("KHOpenAPI Control"));
 	if (hControlWnd_) {
 		ShowWindow(hControlWnd_, SW_HIDE);
 	}
@@ -70,16 +68,45 @@ bool kwapi::create() {
 	return true;
 }
 
+void kwapi::destroy() {
+	
+}
+
 void kwapi::Disconnect() {
+
+	PostQuitMessage(0);
+
 	if (connectPoint_) {
-		connectPoint_->Unadvise(event_.cookie());
+		connectPoint_->Unadvise(event_.cookie());				
 	}
 
-	if (oleObj_) {
+	if (oleObj_) {		
+		oleObj_->DoVerb(OLEIVERB_HIDE, nullptr, nullptr, 0, 0, nullptr);
+		oleObj_->Close(OLECLOSE_NOSAVE);
+		oleObj_->SetClientSite(nullptr);
+		CoDisconnectObject(oleObj_, 0);
 		oleObj_.Release();
 	}
 
-	PostQuitMessage(0);
+	if (v) {		
+		v.Release();
+	}
+
+	if (connectPoint_) {
+		//connectPoint_.Release();
+	}
+}
+
+void kwapi::waitMessageLoop() {
+	MSG msg;	
+	while (GetMessage(&msg, nullptr, 0, 0) != 0) {
+		DispatchMessage(&msg);
+	}
+
+	if (connectPoint_) {
+		connectPoint_.Release();
+	}
+	printf("%s\n", __FUNCTION__);
 }
 
 COMAPI kwapi::QueryInterface(REFIID riid, void** ppvObject) {
@@ -106,7 +133,7 @@ STDMETHODIMP_(ULONG) kwapi::AddRef(void) {
 STDMETHODIMP_(ULONG) kwapi::Release(void) {
 	const ULONG cnt = InterlockedDecrement(&refCount_);
 	if (cnt == 0) {
-		delete this;
+	// delete this;
 	}
 	return cnt;
 }
@@ -392,4 +419,16 @@ COMAPI kwevent::Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags,
 long kwapi::commConnect() {
 	if (!v) return KWFAIL;
 	return v->CommConnect();
+}
+
+
+void _Sleep(int msec) {
+	MSG msg;
+	auto tick = GetTickCount64();
+	while (msec > (GetTickCount64() - tick)) {
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
 }

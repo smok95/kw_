@@ -25,8 +25,12 @@ public:
 	kwevent(kwapi& api) :api_(api) {};
 	// IUnknown
 	COMAPI QueryInterface(REFIID riid, void** ppvObject) OVERRIDE;
-	STDMETHODIMP_(ULONG) AddRef(void) OVERRIDE { return 1; }
-	STDMETHODIMP_(ULONG) Release(void) OVERRIDE { return 1; }
+	STDMETHODIMP_(ULONG) AddRef(void) OVERRIDE { 
+		return 1; 
+	}
+	STDMETHODIMP_(ULONG) Release(void) OVERRIDE { 
+		return 1; 
+	}
 
 	// IDispatch
 	COMAPI GetTypeInfoCount(UINT* pctinfo) OVERRIDE_NOTIMPL;
@@ -52,6 +56,7 @@ public:
 	virtual ~kwapi();
 
 	bool create();
+	void destroy();
 
 	void setOnEventConnectHandler(kw_OnEventConnect handler) {
 		onEventConnect_ = handler;
@@ -167,7 +172,7 @@ public:
 	}
 
 	inline long GetConnectState() {
-		return v ? v->GetConnectState() : KWFAIL;
+		return v ? v->GetConnectState() : 0;
 	}
 	
 	inline _bstr_t GetMasterCodeName(_bstr_t sTrCode) {
@@ -445,6 +450,8 @@ public:
 			return _com_util::ConvertBSTRToString(bstr);
 		}
 	}
+
+	void waitMessageLoop();
 private:
 	kwevent event_;
 	ULONG refCount_ = 0;

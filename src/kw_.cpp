@@ -2,6 +2,7 @@
 #include <string>
 #include <codecvt>
 #include <thread>
+#include <future>
 #include "kwapi.h"
 
 using namespace std;
@@ -30,25 +31,26 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
 	return TRUE;
 }
 
-int	kw_Initialize() {
-	thread_ = thread([](kwapi* pApi) {
-		pApi->create();
+long kw_Initialize(int option) {
+	if (option == 1) {
+		promise<bool> p;
+		future<bool> f = p.get_future();
 
-		MSG msg;
-		while (GetMessage(&msg, nullptr, 0, 0) != 0) {
-			DispatchMessage(&msg);
-		}
-
-		printf("exit");
-
-		}, &api_);
-
-	Sleep(1000);
-	return 0;
+		thread_ = thread([&p](kwapi* pApi) {
+			p.set_value(pApi->create());
+			pApi->waitMessageLoop();
+			}, &api_);
+			
+		return f.get() ? OP_ERR_NONE : OP_ERR_FAIL;
+	}
+	else {
+		// 커스텀 오류코드 정의 필요함. 
+		return api_.create() ? OP_ERR_NONE : -9999;
+	}
 }
 
 void kw_Uninitialize() {
-
+	api_.destroy();
 }
 
 void kw_SetOnEventConnect(kw_OnEventConnect handler) {
@@ -56,23 +58,19 @@ void kw_SetOnEventConnect(kw_OnEventConnect handler) {
 }
 
 void kw_SetOnReceiveTrDataW(kw_OnReceiveTrDataW handler) {
-	api_->setOnReceiveTrDataHandlerW(handler);
-	//jktest api_.setOnReceiveTrDataHandlerW(handler);
+	api_.setOnReceiveTrDataHandlerW(handler);
 }
 
 void kw_SetOnReceiveTrDataA(kw_OnReceiveTrDataA handler) {
-	api_->setOnReceiveTrDataHandlerA(handler);
-	//jktest api_.setOnReceiveTrDataHandlerA(handler);
+	api_.setOnReceiveTrDataHandlerA(handler);
 }
 
 void kw_SetOnReceiveRealDataW(kw_OnReceiveRealDataW handler) {
-	api_->SetOnReceiveRealDataW(handler);
-	//api_.SetOnReceiveRealDataW(handler);
+	api_.SetOnReceiveRealDataW(handler);
 }
 
 void kw_SetOnReceiveRealDataA(kw_OnReceiveRealDataA handler) {
-	api_->SetOnReceiveRealDataA(handler);
-	//api_.SetOnReceiveRealDataA(handler);
+	api_.SetOnReceiveRealDataA(handler);
 }
 
 void kw_SetOnReceiveMsgW(kw_OnReceiveMsgW handler) {
@@ -133,13 +131,11 @@ void kw_SetCharsetUtf8(int useUtf8) {
 }
 
 long kw_CommConnect() {
-	return pApi_->commConnect();
-	//jktest return api_.commConnect();
+	return api_.commConnect();
 }
 
 long kw_GetConnectState() {
-	return pApi_->GetConnectState();
-	//jktest return api_.GetConnectSate();
+	return api_.GetConnectState();
 }
 
 PWSTR kw_GetMasterCodeNameW(PCWSTR sTrCode) {
@@ -522,14 +518,12 @@ long kw_GetMarketTypeA(PCSTR sTrCode) {
 
 long kw_CommRqDataW(PCWSTR sRQName, PCWSTR sTrCode,
 	long nPrevNext, PCWSTR sScreenNo) {
-	return pApi_->CommRqData(sRQName, sTrCode, nPrevNext, sScreenNo);
-	//jktest return api_.CommRqData(sRQName, sTrCode, nPrevNext, sScreenNo);
+	return api_.CommRqData(sRQName, sTrCode, nPrevNext, sScreenNo);
 }
 
 long kw_CommRqDataA(PCSTR sRQName, PCSTR sTrCode,
 	long nPrevNext, PCSTR sScreenNo) {
-	return pApi_->CommRqData(A2B(sRQName), A2B(sTrCode), nPrevNext, A2B(sScreenNo));
-	//jktest return api_.CommRqData(A2B(sRQName), A2B(sTrCode), nPrevNext, A2B(sScreenNo));
+	return api_.CommRqData(A2B(sRQName), A2B(sTrCode), nPrevNext, A2B(sScreenNo));
 }
 
 PWSTR kw_GetLoginInfoW(PCWSTR sTag) {
@@ -570,13 +564,11 @@ long kw_SendOrderFOA(PCSTR sRQName, PCSTR sScreenNo, PCSTR sAccNo,
 }
 
 void kw_SetInputValueW(PCWSTR sID, PCWSTR sValue) {
-	pApi_->SetInputValue(sID, sValue);
-	//jktest api_.SetInputValue(sID, sValue);
+	api_.SetInputValue(sID, sValue);
 }
 
 void kw_SetInputValueA(PCSTR sID, PCSTR sValue) {
-	pApi_->SetInputValue(A2B(sID), A2B(sValue));
-	//jktest api_.SetInputValue(A2B(sID), A2B(sValue));
+	api_.SetInputValue(A2B(sID), A2B(sValue));
 }
 
 void kw_DisconnectRealDataW(PCWSTR sScnNo) {
@@ -603,19 +595,19 @@ long kw_CommKwRqDataW(PCWSTR sArrCode, long bNext, int nCodeCount,
 
 long kw_CommKwRqDataA(PCSTR sArrCode, long bNext, int nCodeCount,
 	int nTypeFlag, PCSTR sRQName, PCSTR sScreenNo) {
-	return pApi_->CommKwRqData(A2B(sArrCode), bNext, nCodeCount, nTypeFlag,
+	return api_.CommKwRqData(A2B(sArrCode), bNext, nCodeCount, nTypeFlag, 
 		A2B(sRQName), A2B(sScreenNo));
-	//jktest return api_.CommKwRqData(A2B(sArrCode), bNext, nCodeCount, nTypeFlag, 
-	//	A2B(sRQName), A2B(sScreenNo));
 }
 
 
 void kw_Wait() {
-
-	MSG msg;
-	while (GetMessage(&msg, nullptr, 0, 0) != 0) {
-		DispatchMessage(&msg);
+	if(thread_.joinable()) {
+		thread_.join();
+		
 	}
+	else {
+		api_.waitMessageLoop();
+	}	
 }
 
 void kw_Sleep(int msec) {
