@@ -15,8 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="exampleConsole.c">
+    <ClCompile Include="example_trRealRecv.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="example_sendCondition.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="example_sendCondition.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="example_trRealRecv.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
